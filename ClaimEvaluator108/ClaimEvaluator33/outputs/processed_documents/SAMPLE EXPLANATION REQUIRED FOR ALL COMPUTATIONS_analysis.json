@@ -1,0 +1,25 @@
+{
+  "originalDocument": "SAMPLE EXPLANATION REQUIRED FOR ALL COMPUTATIONS.docx",
+  "processedAt": "2025-09-14T05:31:43.862Z",
+  "aiAnalysis": {
+    "filename": "SAMPLE EXPLANATION REQUIRED FOR ALL COMPUTATIONS.docx",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.8573795324246296,
+    "enhancedClaims": [],
+    "recommendations": [],
+    "complianceScore": 0.937140396529809,
+    "improvementPotential": 0.2726690755913336
+  },
+  "financialData": {
+    "originalValue": 0,
+    "enhancedValue": 0,
+    "improvementAmount": 0,
+    "improvementPercentage": 0,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827903862
+  }
+}

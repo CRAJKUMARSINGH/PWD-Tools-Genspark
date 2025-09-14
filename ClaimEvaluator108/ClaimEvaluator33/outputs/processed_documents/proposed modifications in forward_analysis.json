@@ -1,0 +1,25 @@
+{
+  "originalDocument": "proposed modifications in forward.docx",
+  "processedAt": "2025-09-14T05:31:37.364Z",
+  "aiAnalysis": {
+    "filename": "proposed modifications in forward.docx",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.8709197911119645,
+    "enhancedClaims": [],
+    "recommendations": [],
+    "complianceScore": 0.9538673053791027,
+    "improvementPotential": 0.33082845986055415
+  },
+  "financialData": {
+    "originalValue": 0,
+    "enhancedValue": 0,
+    "improvementAmount": 0,
+    "improvementPercentage": 0,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827897365
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "originalDocument": "forward_new.tex",
+  "processedAt": "2025-09-14T05:31:24.785Z",
+  "aiAnalysis": {
+    "filename": "forward_new.tex",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.9091751956003586,
+    "enhancedClaims": [],
+    "recommendations": [],
+    "complianceScore": 0.9501709330662663,
+    "improvementPotential": 0.3368294940500913
+  },
+  "financialData": {
+    "originalValue": 0,
+    "enhancedValue": 0,
+    "improvementAmount": 0,
+    "improvementPercentage": 0,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827884785
+  }
+}

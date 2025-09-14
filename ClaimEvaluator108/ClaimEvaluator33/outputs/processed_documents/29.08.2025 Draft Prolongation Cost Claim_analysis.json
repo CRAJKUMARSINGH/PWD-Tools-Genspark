@@ -1,0 +1,64 @@
+{
+  "originalDocument": "29.08.2025 Draft Prolongation Cost Claim.docx",
+  "processedAt": "2025-09-14T05:31:04.766Z",
+  "aiAnalysis": {
+    "filename": "29.08.2025 Draft Prolongation Cost Claim.docx",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.8831110834081224,
+    "enhancedClaims": [
+      {
+        "id": 1,
+        "type": "Time Extension",
+        "description": "Delay due to employer's actions",
+        "value": 4428928,
+        "category": "time_impact",
+        "originalValue": 4428928,
+        "enhancedValue": 6603585.420179246,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      },
+      {
+        "id": 2,
+        "type": "Additional Costs",
+        "description": "Extra costs incurred due to variations",
+        "value": 3875312,
+        "category": "cost_overrun",
+        "originalValue": 3875312,
+        "enhancedValue": 5778137.24265684,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      },
+      {
+        "id": 3,
+        "type": "Loss of Productivity",
+        "description": "Productivity loss due to disruption",
+        "value": 2768080,
+        "category": "productivity_loss",
+        "originalValue": 2768080,
+        "enhancedValue": 4127240.8876120285,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      }
+    ],
+    "recommendations": [
+      "Apply time impact analysis methodology",
+      "Include detailed cost breakdown",
+      "Add supporting documentation references",
+      "Strengthen legal basis with contract clauses"
+    ],
+    "complianceScore": 0.9403470896676912,
+    "improvementPotential": 0.4910121411274344
+  },
+  "financialData": {
+    "originalValue": 11072320,
+    "enhancedValue": 16508963.550448114,
+    "improvementAmount": 5436643.550448114,
+    "improvementPercentage": 49.101214112743435,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827864766
+  }
+}

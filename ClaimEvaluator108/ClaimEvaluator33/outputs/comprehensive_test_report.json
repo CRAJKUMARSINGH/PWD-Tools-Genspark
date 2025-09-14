@@ -1,0 +1,164 @@
+{
+  "timestamp": "2025-09-14T05:31:00.514Z",
+  "totalDocuments": 27,
+  "processedDocuments": 27,
+  "failedDocuments": 0,
+  "documentTypes": {
+    ".doc": 3,
+    ".docx": 11,
+    ".pdf": 4,
+    ".tex": 5,
+    ".xlsx": 3,
+    ".txt": 1
+  },
+  "processingTimes": [
+    {
+      "document": "1additional claims proposed.doc",
+      "time": 2325,
+      "size": 244224
+    },
+    {
+      "document": "29.08.2025 Draft Prolongation Cost Claim.docx",
+      "time": 1906,
+      "size": 25402
+    },
+    {
+      "document": "29.08.2025 Wagad Draft Cover letter for claim submission.docx",
+      "time": 2348,
+      "size": 18679
+    },
+    {
+      "document": "additional claims proposed.pdf",
+      "time": 2434,
+      "size": 43385
+    },
+    {
+      "document": "additional claims scope.docx",
+      "time": 2499,
+      "size": 17306
+    },
+    {
+      "document": "claim_consolidated_new.tex",
+      "time": 1683,
+      "size": 3520
+    },
+    {
+      "document": "CLAIM_MASTER_RAJKUMAR.docx",
+      "time": 2263,
+      "size": 11389
+    },
+    {
+      "document": "document.tex",
+      "time": 2018,
+      "size": 6483
+    },
+    {
+      "document": "forward.doc",
+      "time": 1913,
+      "size": 86016
+    },
+    {
+      "document": "forward.pdf",
+      "time": 2645,
+      "size": 16486
+    },
+    {
+      "document": "forward_new.tex",
+      "time": 2213,
+      "size": 2772
+    },
+    {
+      "document": "Insertion for Cover Letter.docx",
+      "time": 1827,
+      "size": 16359
+    },
+    {
+      "document": "Insertion for Cover Letter.pdf",
+      "time": 2238,
+      "size": 45720
+    },
+    {
+      "document": "observation.docx",
+      "time": 2354,
+      "size": 17088
+    },
+    {
+      "document": "OBSERVATION_ON_DRAFT.xlsx",
+      "time": 1730,
+      "size": 14859
+    },
+    {
+      "document": "proposed modifications in claim.docx",
+      "time": 2098,
+      "size": 13203
+    },
+    {
+      "document": "proposed modifications in forward.docx",
+      "time": 2333,
+      "size": 14535
+    },
+    {
+      "document": "RECHECK FOR ADDITIONAL CLAIMS.docx",
+      "time": 2520,
+      "size": 15516
+    },
+    {
+      "document": "revision_forward.tex",
+      "time": 2038,
+      "size": 6483
+    },
+    {
+      "document": "SAMPLE EXPLANATION REQUIRED FOR ALL COMPUTATIONS.docx",
+      "time": 1939,
+      "size": 20830
+    },
+    {
+      "document": "Subject.docx",
+      "time": 2046,
+      "size": 13680
+    },
+    {
+      "document": "Summary format of  Loss of productivity - Option - 1.xlsx",
+      "time": 1758,
+      "size": 2828522
+    },
+    {
+      "document": "SUMMARY OF CLAIMS.doc",
+      "time": 2416,
+      "size": 1224192
+    },
+    {
+      "document": "SUMMARY OF CLAIMS.pdf",
+      "time": 2449,
+      "size": 4029887
+    },
+    {
+      "document": "supp_claims.tex",
+      "time": 1835,
+      "size": 23393
+    },
+    {
+      "document": "TOTAL_CLAIM_SUMMARY.txt",
+      "time": 1668,
+      "size": 682
+    },
+    {
+      "document": "UDAIPUR-Summary format of  Loss of productivity - Option - 1.xlsx",
+      "time": 2464,
+      "size": 2837682
+    }
+  ],
+  "errors": [],
+  "performance": {
+    "totalProcessingTime": "1m 0s",
+    "averageProcessingTime": 2146.6666666666665,
+    "successRate": 100,
+    "documentsPerMinute": 26.999100029999
+  },
+  "claimsExtracted": [],
+  "financialImpact": {
+    "totalClaimValue": 139969473,
+    "enhancedValue": 198942134.34577596,
+    "improvementPercentage": 42.13251652792603
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "originalDocument": "RECHECK FOR ADDITIONAL CLAIMS.docx",
+  "processedAt": "2025-09-14T05:31:39.885Z",
+  "aiAnalysis": {
+    "filename": "RECHECK FOR ADDITIONAL CLAIMS.docx",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.9183407347583207,
+    "enhancedClaims": [
+      {
+        "id": 1,
+        "type": "Time Extension",
+        "description": "Delay due to employer's actions",
+        "value": 2511695,
+        "category": "time_impact",
+        "originalValue": 2511695,
+        "enhancedValue": 3569341.1274981094,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      },
+      {
+        "id": 2,
+        "type": "Additional Costs",
+        "description": "Extra costs incurred due to variations",
+        "value": 2197733,
+        "category": "cost_overrun",
+        "originalValue": 2197733,
+        "enhancedValue": 3123173.308924771,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      },
+      {
+        "id": 3,
+        "type": "Loss of Productivity",
+        "description": "Productivity loss due to disruption",
+        "value": 1569809,
+        "category": "productivity_loss",
+        "originalValue": 1569809,
+        "enhancedValue": 2230837.671778094,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      }
+    ],
+    "recommendations": [
+      "Apply time impact analysis methodology",
+      "Include detailed cost breakdown",
+      "Add supporting documentation references",
+      "Strengthen legal basis with contract clauses"
+    ],
+    "complianceScore": 0.9498351199396705,
+    "improvementPotential": 0.4210885985352957
+  },
+  "financialData": {
+    "originalValue": 6279237,
+    "enhancedValue": 8923352.108200975,
+    "improvementAmount": 2644115.1082009748,
+    "improvementPercentage": 42.10885985352957,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827899885
+  }
+}

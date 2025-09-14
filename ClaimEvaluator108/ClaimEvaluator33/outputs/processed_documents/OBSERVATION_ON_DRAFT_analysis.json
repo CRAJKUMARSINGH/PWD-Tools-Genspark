@@ -1,0 +1,25 @@
+{
+  "originalDocument": "OBSERVATION_ON_DRAFT.xlsx",
+  "processedAt": "2025-09-14T05:31:32.934Z",
+  "aiAnalysis": {
+    "filename": "OBSERVATION_ON_DRAFT.xlsx",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.9593384239239863,
+    "enhancedClaims": [],
+    "recommendations": [],
+    "complianceScore": 0.9608993949968565,
+    "improvementPotential": 0.27790943706790106
+  },
+  "financialData": {
+    "originalValue": 0,
+    "enhancedValue": 0,
+    "improvementAmount": 0,
+    "improvementPercentage": 0,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827892934
+  }
+}

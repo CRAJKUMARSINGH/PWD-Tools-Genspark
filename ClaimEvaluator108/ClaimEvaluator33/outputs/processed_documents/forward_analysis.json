@@ -1,0 +1,25 @@
+{
+  "originalDocument": "forward.pdf",
+  "processedAt": "2025-09-14T05:31:22.572Z",
+  "aiAnalysis": {
+    "filename": "forward.pdf",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.9148528494888116,
+    "enhancedClaims": [],
+    "recommendations": [],
+    "complianceScore": 0.9322658315085783,
+    "improvementPotential": 0.34202820114370086
+  },
+  "financialData": {
+    "originalValue": 0,
+    "enhancedValue": 0,
+    "improvementAmount": 0,
+    "improvementPercentage": 0,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827882572
+  }
+}

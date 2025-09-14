@@ -1,0 +1,27 @@
+CONSTRUCTION CLAIM SUMMARY
+==========================
+
+Project: Infrastructure Development Project
+Contractor: ABC Construction Ltd.
+Contract Type: FIDIC Red Book
+
+TOTAL CLAIM AMOUNT: ₹451.47 CRORES
+
+This represents the comprehensive claim for:
+1. Additional Scope Works
+2. Prolongation Costs
+3. Loss of Productivity
+4. Material Price Escalation
+5. Delay Compensation
+
+Total Claim Value: 451.47 Crores
+Amount in Rupees: ₹45,147,000,000
+
+The claim is supported by detailed documentation including:
+- Variation orders
+- Time impact analysis
+- Cost breakdowns
+- Supporting evidence
+
+Legal Basis: FIDIC Contract Clauses 8.4, 13.3, 20.1
+Status: Under Review

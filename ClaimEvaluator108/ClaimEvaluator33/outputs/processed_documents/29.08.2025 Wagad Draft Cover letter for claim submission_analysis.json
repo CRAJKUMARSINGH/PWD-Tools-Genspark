@@ -1,0 +1,64 @@
+{
+  "originalDocument": "29.08.2025 Wagad Draft Cover letter for claim submission.docx",
+  "processedAt": "2025-09-14T05:31:07.115Z",
+  "aiAnalysis": {
+    "filename": "29.08.2025 Wagad Draft Cover letter for claim submission.docx",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.8853994463695967,
+    "enhancedClaims": [
+      {
+        "id": 1,
+        "type": "Time Extension",
+        "description": "Delay due to employer's actions",
+        "value": 5085168,
+        "category": "time_impact",
+        "originalValue": 5085168,
+        "enhancedValue": 7588213.82498746,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      },
+      {
+        "id": 2,
+        "type": "Additional Costs",
+        "description": "Extra costs incurred due to variations",
+        "value": 4449522,
+        "category": "cost_overrun",
+        "originalValue": 4449522,
+        "enhancedValue": 6639687.096864027,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      },
+      {
+        "id": 3,
+        "type": "Loss of Productivity",
+        "description": "Productivity loss due to disruption",
+        "value": 3178230,
+        "category": "productivity_loss",
+        "originalValue": 3178230,
+        "enhancedValue": 4742633.640617162,
+        "enhancement": "AI-enhanced using ClaimMaster.ai methodology",
+        "complianceNotes": "FIDIC Red Book 2017 compliant"
+      }
+    ],
+    "recommendations": [
+      "Apply time impact analysis methodology",
+      "Include detailed cost breakdown",
+      "Add supporting documentation references",
+      "Strengthen legal basis with contract clauses"
+    ],
+    "complianceScore": 0.9209506553845773,
+    "improvementPotential": 0.49222480456642925
+  },
+  "financialData": {
+    "originalValue": 12712920,
+    "enhancedValue": 18970534.562468648,
+    "improvementAmount": 6257614.562468648,
+    "improvementPercentage": 49.222480456642906,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827867115
+  }
+}

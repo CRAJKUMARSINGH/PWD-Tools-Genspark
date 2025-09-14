@@ -1,0 +1,29 @@
+{
+  "totalOriginalValue": 139969473,
+  "totalEnhancedValue": 198942134.34577596,
+  "totalImprovement": 58972661.34577596,
+  "improvementPercentage": 42.13251652792603,
+  "currency": "INR",
+  "calculationMethod": "ClaimMaster.ai Quantum Engine",
+  "confidenceLevel": 0.94,
+  "calculations": [
+    {
+      "category": "Time Impact Analysis",
+      "originalValue": 55987789,
+      "enhancedValue": 79576853,
+      "methodology": "FIDIC Traditional + AI Enhancement"
+    },
+    {
+      "category": "Loss of Productivity",
+      "originalValue": 48989315,
+      "enhancedValue": 69629747,
+      "methodology": "NYGGS ERP + Quantum Calculations"
+    },
+    {
+      "category": "Additional Claims",
+      "originalValue": 34992368,
+      "enhancedValue": 49735533,
+      "methodology": "NHAI HAM Model + AI Optimization"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "originalDocument": "UDAIPUR-Summary format of  Loss of productivity - Option - 1.xlsx",
+  "processedAt": "2025-09-14T05:31:58.500Z",
+  "aiAnalysis": {
+    "filename": "UDAIPUR-Summary format of  Loss of productivity - Option - 1.xlsx",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.9341411128993796,
+    "enhancedClaims": [],
+    "recommendations": [],
+    "complianceScore": 0.9867987628009328,
+    "improvementPotential": 0.25524429706988816
+  },
+  "financialData": {
+    "originalValue": 0,
+    "enhancedValue": 0,
+    "improvementAmount": 0,
+    "improvementPercentage": 0,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827918500
+  }
+}

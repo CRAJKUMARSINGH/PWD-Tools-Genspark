@@ -1,0 +1,25 @@
+{
+  "originalDocument": "Insertion for Cover Letter.pdf",
+  "processedAt": "2025-09-14T05:31:28.851Z",
+  "aiAnalysis": {
+    "filename": "Insertion for Cover Letter.pdf",
+    "aiProvider": "Grok",
+    "confidenceScore": 0.8663219174677906,
+    "enhancedClaims": [],
+    "recommendations": [],
+    "complianceScore": 0.9272288892447363,
+    "improvementPotential": 0.3589688958758905
+  },
+  "financialData": {
+    "originalValue": 0,
+    "enhancedValue": 0,
+    "improvementAmount": 0,
+    "improvementPercentage": 0,
+    "currency": "INR"
+  },
+  "processingMetadata": {
+    "version": "3.0.0",
+    "aiProvider": "Grok",
+    "processingTime": 1757827888851
+  }
+}
