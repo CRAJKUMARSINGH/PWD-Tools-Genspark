@@ -1,0 +1,33 @@
+{
+    "app_info": {
+        "name": "PWD Tools Desktop",
+        "version": "1.0.0",
+        "author": "Mrs. Premlata Jain, AAO, PWD Udaipur"
+    },
+    "ui_settings": {
+        "theme": "light",
+        "color_scheme": "blue",
+        "window_width": 1200,
+        "window_height": 800,
+        "font_size": 12
+    },
+    "department_info": {
+        "name": "Public Works Department",
+        "office": "PWD Office, Udaipur",
+        "state": "Rajasthan",
+        "contact": ""
+    },
+    "calculation_defaults": {
+        "deduction_rate": 2.0,
+        "stamp_duty_rate": 0.1,
+        "penalty_rate": 0.5,
+        "tax_rate": 18.0
+    },
+    "export_settings": {
+        "default_export_path": "exports",
+        "pdf_quality": "high",
+        "excel_format": "xlsx",
+        "auto_backup": true
+    },
+    "last_updated": "2025-08-27T11:32:18.567207"
+}

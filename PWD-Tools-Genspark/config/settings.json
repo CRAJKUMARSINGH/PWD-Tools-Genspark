@@ -1,0 +1,86 @@
+{
+  "app_name": "PWD Tools Desktop",
+  "version": "1.0.0",
+  "database_path": "database/pwd_tools.db",
+  "theme": "light",
+  "window_size": "1400x900",
+  "department_info": {
+    "name": "Public Works Department",
+    "office": "PWD Electric Division, Udaipur",
+    "initiative": "Mrs. Premlata Jain, AAO"
+  },
+  "tools": {
+    "excel_emd": {
+      "enabled": true,
+      "name": "Excel se EMD",
+      "description": "Process Excel files for EMD refunds"
+    },
+    "bill_note": {
+      "enabled": true,
+      "name": "Bill Note Sheet",
+      "description": "Generate and manage bill notes"
+    },
+    "delay_calculator": {
+      "enabled": true,
+      "name": "Delay Calculator",
+      "description": "Calculate project delays and penalties"
+    },
+    "emd_refund": {
+      "enabled": true,
+      "name": "EMD Refund",
+      "description": "Calculate EMD refunds with penalties"
+    },
+    "deductions": {
+      "enabled": true,
+      "name": "Deductions Table",
+      "description": "Calculate TDS and security deductions"
+    },
+    "financial_progress": {
+      "enabled": true,
+      "name": "Financial Progress",
+      "description": "Track financial progress"
+    },
+    "security_refund": {
+      "enabled": true,
+      "name": "Security Refund",
+      "description": "Process security deposit refunds"
+    },
+    "stamp_duty": {
+      "enabled": true,
+      "name": "Stamp Duty",
+      "description": "Calculate stamp duty amounts"
+    },
+    "bill_deviation": {
+      "enabled": true,
+      "name": "Bill Deviation",
+      "description": "Generate bill deviation reports"
+    },
+    "tender_processing": {
+      "enabled": true,
+      "name": "Tender Processing",
+      "description": "Process tender documents"
+    },
+    "hand_receipt": {
+      "enabled": true,
+      "name": "Hand Receipt",
+      "description": "Generate hand receipts"
+    },
+    "excel_emd_web": {
+      "enabled": true,
+      "name": "Excel to EMD Web",
+      "description": "Web-based Excel processing"
+    }
+  },
+  "calculations": {
+    "tds_rate": 1.0,
+    "security_rate": 5.0,
+    "delay_penalty_rate": 0.1,
+    "emd_penalty_days": 30
+  },
+  "pdf_settings": {
+    "page_size": "A4",
+    "margin": 72,
+    "font_size": 10,
+    "title_font_size": 16
+  }
+}
