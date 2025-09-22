@@ -11,7 +11,6 @@ import subprocess
 import sys
 import os
 
-
 class PWDToolsSimple:
     def __init__(self):
         """Initialize PWD Tools Simple"""

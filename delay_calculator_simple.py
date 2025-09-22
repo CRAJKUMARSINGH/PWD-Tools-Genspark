@@ -101,7 +101,8 @@ class SimpleCalendarWidget:
             if self.callback:
                 self.callback(selected_date)
             
-            self.window.destroy()
+            if self.window:
+                self.window.destroy()
         except Exception as e:
             messagebox.showerror("Error", f"Invalid date: {e}")
 
@@ -138,10 +139,8 @@ class SimpleDelayCalculatorTool:
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS delay_records (
                 id INTEGER PRIMARY KEY,
-                project_name TEXT,
-                planned_start_date TEXT,
-                actual_start_date TEXT,
-                planned_completion_date TEXT,
+                start_date TEXT,
+                completion_date TEXT,
                 actual_completion_date TEXT,
                 delay_days INTEGER,
                 delay_reason TEXT,
@@ -153,10 +152,13 @@ class SimpleDelayCalculatorTool:
     
     def create_interface(self):
         """Create interface"""
+        # Configure root window background
+        self.root.configure(bg="#f0f8ff")
+        
         # Create scrollable frame for mobile compatibility
-        self.main_canvas = tk.Canvas(self.root)
+        self.main_canvas = tk.Canvas(self.root, bg="#f0f8ff")
         self.main_scrollbar = tk.Scrollbar(self.root, orient="vertical", command=self.main_canvas.yview)
-        self.scrollable_frame = tk.Frame(self.main_canvas)
+        self.scrollable_frame = tk.Frame(self.main_canvas, bg="#f0f8ff")
         
         self.scrollable_frame.bind(
             "<Configure>",
@@ -169,92 +171,102 @@ class SimpleDelayCalculatorTool:
         self.main_canvas.pack(side="left", fill="both", expand=True)
         self.main_scrollbar.pack(side="right", fill="y")
         
-        # Header
+        # Header with gradient effect
+        header_frame = tk.Frame(self.scrollable_frame, bg="#ff6b6b", height=80)
+        header_frame.pack(fill="x", padx=0, pady=0)
+        header_frame.pack_propagate(False)
+        
         header = tk.Label(
-            self.scrollable_frame,
-            text="Delay Calculator - सरल",
-            font=("Arial", 18, "bold"),
-            fg="blue"
+            header_frame,
+            text="⏰ Delay Calculator - सरल",
+            font=("Arial", 24, "bold"),
+            fg="white",
+            bg="#ff6b6b"
         )
-        header.pack(pady=10)
+        header.pack(pady=20)
         
-        # Main frame
-        main_frame = tk.LabelFrame(self.scrollable_frame, text="Project Delay Calculation", font=("Arial", 12, "bold"))
-        main_frame.pack(fill="x", padx=10, pady=5)
+        # Main frame with colored background
+        main_frame = tk.Frame(self.scrollable_frame, bg="#f0f8ff")
+        main_frame.pack(pady=20, padx=20, fill="both", expand=True)
         
-        # Project Name
-        tk.Label(main_frame, text="Project Name:", font=("Arial", 10, "bold")).pack(pady=3)
-        self.project_name_entry = tk.Entry(main_frame, width=50, font=("Arial", 10))
-        self.project_name_entry.pack(pady=3)
+        # Form container with border and shadow effect
+        form_container = tk.Frame(main_frame, bg="#ffffff", relief="raised", bd=2)
+        form_container.pack(pady=10, padx=10, fill="both", expand=True)
+        
+        # Title
+        title_label = tk.Label(
+            form_container,
+            text="Project Delay Calculation",
+            font=("Arial", 16, "bold"),
+            fg="#ff6b6b",
+            bg="#ffffff"
+        )
+        title_label.pack(pady=20)
         
         # Date fields with calendar
-        self.create_date_fields(main_frame)
+        self.create_date_fields(form_container)
         
         # Delay Reason
-        tk.Label(main_frame, text="Delay Reason (Optional):", font=("Arial", 10, "bold")).pack(pady=3)
-        self.delay_reason_entry = tk.Entry(main_frame, width=50, font=("Arial", 10))
+        tk.Label(form_container, text="Delay Reason (Optional):", font=("Arial", 12, "bold"), bg="#ffffff", fg="#4ecdc4").pack(pady=3)
+        self.delay_reason_entry = tk.Entry(form_container, width=50, font=("Arial", 12))
         self.delay_reason_entry.pack(pady=3)
         
-        # Calculate button
-        calc_btn = tk.Button(main_frame, text="Calculate Delay", command=self.calculate_delay, 
-                           width=20, height=2, font=("Arial", 10, "bold"), bg="lightblue")
-        calc_btn.pack(pady=10)
+        # Calculate button with improved styling
+        calc_btn = tk.Button(form_container, text="Calculate Delay", command=self.calculate_delay, 
+                           width=20, height=2, font=("Arial", 12, "bold"), 
+                           bg="#4ecdc4", fg="white", relief="raised", bd=2)
+        calc_btn.pack(pady=15)
         
         # Results section
         self.create_results_section(main_frame)
         
         # Action buttons
         self.create_action_buttons(main_frame)
+        
+        # Footer
+        footer_label = tk.Label(
+            main_frame,
+            text="Delay Calculator - PWD Tools",
+            font=("Arial", 10),
+            fg="#718096",
+            bg="#f0f8ff"
+        )
+        footer_label.pack(side="bottom", pady=10)
     
     def create_date_fields(self, parent):
         """Create date fields with calendar"""
         # Initialize calendar widgets
-        self.planned_start_calendar = SimpleCalendarWidget(self.root, self.set_planned_start_date)
-        self.actual_start_calendar = SimpleCalendarWidget(self.root, self.set_actual_start_date)
-        self.planned_completion_calendar = SimpleCalendarWidget(self.root, self.set_planned_completion_date)
+        self.start_calendar = SimpleCalendarWidget(self.root, self.set_start_date)
+        self.completion_calendar = SimpleCalendarWidget(self.root, self.set_completion_date)
         self.actual_completion_calendar = SimpleCalendarWidget(self.root, self.set_actual_completion_date)
         
-        # Planned Start Date
-        planned_start_frame = tk.Frame(parent)
-        planned_start_frame.pack(fill="x", padx=5, pady=3)
+        # Start Date
+        start_frame = tk.Frame(parent)
+        start_frame.pack(fill="x", padx=5, pady=3)
         
-        tk.Label(planned_start_frame, text="Planned Start Date (DD/MM/YYYY):", font=("Arial", 10, "bold")).pack(pady=3)
-        planned_start_input_frame = tk.Frame(planned_start_frame)
-        planned_start_input_frame.pack(pady=3)
+        tk.Label(start_frame, text="Start Date (DD/MM/YYYY):", font=("Arial", 10, "bold")).pack(pady=3)
+        start_input_frame = tk.Frame(start_frame)
+        start_input_frame.pack(pady=3)
         
-        self.planned_start_entry = tk.Entry(planned_start_input_frame, width=25, font=("Arial", 10))
-        self.planned_start_entry.pack(side="left", padx=5)
+        self.start_entry = tk.Entry(start_input_frame, width=25, font=("Arial", 10))
+        self.start_entry.pack(side="left", padx=5)
         
-        planned_start_cal_btn = tk.Button(planned_start_input_frame, text="📅", command=self.show_planned_start_calendar, width=3)
-        planned_start_cal_btn.pack(side="left", padx=5)
+        start_cal_btn = tk.Button(start_input_frame, text="📅", command=self.show_start_calendar, width=3)
+        start_cal_btn.pack(side="left", padx=5)
         
-        # Actual Start Date
-        actual_start_frame = tk.Frame(parent)
-        actual_start_frame.pack(fill="x", padx=5, pady=3)
+        # Completion Date
+        completion_frame = tk.Frame(parent)
+        completion_frame.pack(fill="x", padx=5, pady=3)
         
-        tk.Label(actual_start_frame, text="Actual Start Date (DD/MM/YYYY):", font=("Arial", 10, "bold")).pack(pady=3)
-        actual_start_input_frame = tk.Frame(actual_start_frame)
-        actual_start_input_frame.pack(pady=3)
+        tk.Label(completion_frame, text="Completion Date (DD/MM/YYYY):", font=("Arial", 10, "bold")).pack(pady=3)
+        completion_input_frame = tk.Frame(completion_frame)
+        completion_input_frame.pack(pady=3)
         
-        self.actual_start_entry = tk.Entry(actual_start_input_frame, width=25, font=("Arial", 10))
-        self.actual_start_entry.pack(side="left", padx=5)
+        self.completion_entry = tk.Entry(completion_input_frame, width=25, font=("Arial", 10))
+        self.completion_entry.pack(side="left", padx=5)
         
-        actual_start_cal_btn = tk.Button(actual_start_input_frame, text="📅", command=self.show_actual_start_calendar, width=3)
-        actual_start_cal_btn.pack(side="left", padx=5)
-        
-        # Planned Completion Date
-        planned_completion_frame = tk.Frame(parent)
-        planned_completion_frame.pack(fill="x", padx=5, pady=3)
-        
-        tk.Label(planned_completion_frame, text="Planned Completion Date (DD/MM/YYYY):", font=("Arial", 10, "bold")).pack(pady=3)
-        planned_completion_input_frame = tk.Frame(planned_completion_frame)
-        planned_completion_input_frame.pack(pady=3)
-        
-        self.planned_completion_entry = tk.Entry(planned_completion_input_frame, width=25, font=("Arial", 10))
-        self.planned_completion_entry.pack(side="left", padx=5)
-        
-        planned_completion_cal_btn = tk.Button(planned_completion_input_frame, text="📅", command=self.show_planned_completion_calendar, width=3)
-        planned_completion_cal_btn.pack(side="left", padx=5)
+        completion_cal_btn = tk.Button(completion_input_frame, text="📅", command=self.show_completion_calendar, width=3)
+        completion_cal_btn.pack(side="left", padx=5)
         
         # Actual Completion Date
         actual_completion_frame = tk.Frame(parent)
@@ -270,36 +282,27 @@ class SimpleDelayCalculatorTool:
         actual_completion_cal_btn = tk.Button(actual_completion_input_frame, text="📅", command=self.show_actual_completion_calendar, width=3)
         actual_completion_cal_btn.pack(side="left", padx=5)
     
-    def show_planned_start_calendar(self):
-        """Show planned start date calendar"""
-        self.planned_start_calendar.show_calendar(self.planned_start_entry.get())
+    def show_start_calendar(self):
+        """Show start date calendar"""
+        self.start_calendar.show_calendar(self.start_entry.get())
     
-    def show_actual_start_calendar(self):
-        """Show actual start date calendar"""
-        self.actual_start_calendar.show_calendar(self.actual_start_entry.get())
-    
-    def show_planned_completion_calendar(self):
-        """Show planned completion date calendar"""
-        self.planned_completion_calendar.show_calendar(self.planned_completion_entry.get())
+    def show_completion_calendar(self):
+        """Show completion date calendar"""
+        self.completion_calendar.show_calendar(self.completion_entry.get())
     
     def show_actual_completion_calendar(self):
         """Show actual completion date calendar"""
         self.actual_completion_calendar.show_calendar(self.actual_completion_entry.get())
     
-    def set_planned_start_date(self, date):
-        """Set planned start date from calendar"""
-        self.planned_start_entry.delete(0, "end")
-        self.planned_start_entry.insert(0, date)
+    def set_start_date(self, date):
+        """Set start date from calendar"""
+        self.start_entry.delete(0, "end")
+        self.start_entry.insert(0, date)
     
-    def set_actual_start_date(self, date):
-        """Set actual start date from calendar"""
-        self.actual_start_entry.delete(0, "end")
-        self.actual_start_entry.insert(0, date)
-    
-    def set_planned_completion_date(self, date):
-        """Set planned completion date from calendar"""
-        self.planned_completion_entry.delete(0, "end")
-        self.planned_completion_entry.insert(0, date)
+    def set_completion_date(self, date):
+        """Set completion date from calendar"""
+        self.completion_entry.delete(0, "end")
+        self.completion_entry.insert(0, date)
     
     def set_actual_completion_date(self, date):
         """Set actual completion date from calendar"""
@@ -311,18 +314,18 @@ class SimpleDelayCalculatorTool:
         results_frame = tk.LabelFrame(parent, text="Delay Calculation Results", font=("Arial", 12, "bold"))
         results_frame.pack(fill="both", expand=True, padx=5, pady=5)
         
-        # Results display - shrunk vertically by 15%
+        # Results display
         text_frame = tk.Frame(results_frame)
         text_frame.pack(fill="both", expand=True, padx=5, pady=5)
         
-        self.results_text = tk.Text(text_frame, height=8, font=("Arial", 10), wrap="word")  # Reduced height
+        self.results_text = tk.Text(text_frame, height=12, font=("Arial", 10), wrap="word")
         scrollbar = tk.Scrollbar(text_frame, orient="vertical", command=self.results_text.yview)
         self.results_text.configure(yscrollcommand=scrollbar.set)
         
         self.results_text.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
         
-        self.results_text.insert("1.0", "Enter project details and click 'Calculate Delay'")
+        self.results_text.insert("1.0", "Enter dates and click 'Calculate Delay'")
     
     def create_action_buttons(self, parent):
         """Create action buttons"""
@@ -342,180 +345,99 @@ class SimpleDelayCalculatorTool:
         print_btn.pack(side="left", padx=5)
     
     def calculate_delay(self):
-        """Calculate project delay"""
+        """Calculate delay based on three dates"""
         try:
-            project_name = self.project_name_entry.get().strip()
-            planned_start = self.planned_start_entry.get().strip()
-            actual_start = self.actual_start_entry.get().strip()
-            planned_completion = self.planned_completion_entry.get().strip()
-            actual_completion = self.actual_completion_entry.get().strip()
+            start_date_str = self.start_entry.get().strip()
+            completion_date_str = self.completion_entry.get().strip()
+            actual_completion_date_str = self.actual_completion_entry.get().strip()
             delay_reason = self.delay_reason_entry.get().strip()
             
-            if not project_name:
-                messagebox.showerror("Error", "Please enter project name")
-                return
-            
-            if not all([planned_start, actual_start, planned_completion, actual_completion]):
-                messagebox.showerror("Error", "Please fill all date fields")
+            if not all([start_date_str, completion_date_str, actual_completion_date_str]):
+                messagebox.showerror("Error", "Please fill all required fields: Start Date, Completion Date, and Actual Completion Date")
                 return
             
             # Parse dates
             try:
-                planned_start_dt = datetime.strptime(planned_start, "%d/%m/%Y")
-                actual_start_dt = datetime.strptime(actual_start, "%d/%m/%Y")
-                planned_completion_dt = datetime.strptime(planned_completion, "%d/%m/%Y")
-                actual_completion_dt = datetime.strptime(actual_completion, "%d/%m/%Y")
+                start_date = datetime.strptime(start_date_str, "%d/%m/%Y")
+                completion_date = datetime.strptime(completion_date_str, "%d/%m/%Y")
+                actual_completion_date = datetime.strptime(actual_completion_date_str, "%d/%m/%Y")
             except ValueError:
                 messagebox.showerror("Error", "Please enter dates in DD/MM/YYYY format")
                 return
             
-            # Calculate delays
-            start_delay = (actual_start_dt - planned_start_dt).days
-            completion_delay = (actual_completion_dt - planned_completion_dt).days
-            total_delay = completion_delay
+            # Calculate delay
+            planned_duration = (completion_date - start_date).days
+            actual_duration = (actual_completion_date - start_date).days
+            delay_days = max(0, actual_duration - planned_duration)
             
-            # Calculate project duration
-            planned_duration = (planned_completion_dt - planned_start_dt).days
-            actual_duration = (actual_completion_dt - actual_start_dt).days
-            
-            # Generate analysis
-            analysis = f"""
-DELAY CALCULATION REPORT
-========================
-
-Project Name: {project_name}
-Analysis Date: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}
-
-SCHEDULE ANALYSIS
-=================
-Planned Start: {planned_start}
-Actual Start: {actual_start}
-Start Delay: {start_delay} days
-
-Planned Completion: {planned_completion}
-Actual Completion: {actual_completion}
-Completion Delay: {completion_delay} days
-
-PROJECT DURATION
-================
-Planned Duration: {planned_duration} days
-Actual Duration: {actual_duration} days
-Duration Difference: {actual_duration - planned_duration} days
-
-DELAY SUMMARY
-=============
-Total Delay: {total_delay} days
-Delay Status: {'DELAYED' if total_delay > 0 else 'ON TIME' if total_delay == 0 else 'EARLY'}
-
-DELAY ANALYSIS
-==============
-"""
-            
-            if total_delay > 0:
-                analysis += f"⚠️  PROJECT DELAYED by {total_delay} days\n"
-                if total_delay > 30:
-                    analysis += "🔴  MAJOR DELAY - Requires immediate attention\n"
-                elif total_delay > 15:
-                    analysis += "🟡  MODERATE DELAY - Monitor closely\n"
-                else:
-                    analysis += "🟢  MINOR DELAY - Within acceptable limits\n"
-            elif total_delay == 0:
-                analysis += "✅  PROJECT COMPLETED ON TIME\n"
-            else:
-                analysis += f"🎉  PROJECT COMPLETED EARLY by {abs(total_delay)} days\n"
-            
-            if delay_reason:
-                analysis += f"\nDelay Reason: {delay_reason}\n"
-            
-            # Penalty calculation (simple)
-            if total_delay > 0:
-                penalty_rate = 0.1  # 0.1% per day
-                analysis += f"\nPENALTY CALCULATION\n"
-                analysis += f"===================\n"
-                analysis += f"Delay Days: {total_delay}\n"
-                analysis += f"Penalty Rate: {penalty_rate}% per day\n"
-                analysis += f"Note: Actual penalty calculation depends on contract terms\n"
-            
-            analysis += f"\nRECOMMENDATIONS\n"
-            analysis += f"===============\n"
-            if total_delay > 0:
-                analysis += f"• Review project timeline and resource allocation\n"
-                analysis += f"• Implement corrective measures for future projects\n"
-                analysis += f"• Document delay reasons for future reference\n"
-            else:
-                analysis += f"• Maintain current project management practices\n"
-                analysis += f"• Use this project as a benchmark for future planning\n"
+            # Calculate penalty (assuming 0.5% per day delay)
+            penalty_rate = 0.005  # 0.5%
+            penalty_amount = 0
+            if delay_days > 0:
+                # Using a default value for penalty calculation
+                default_value = 100000  # Default value for calculation
+                penalty_amount = default_value * penalty_rate * delay_days
             
             # Display results
-            self.results_text.delete("1.0", "end")
-            self.results_text.insert("1.0", analysis)
+            result_text = f"""
+Delay Calculation Report
+========================
+
+Start Date: {start_date_str}
+Completion Date: {completion_date_str}
+Actual Completion Date: {actual_completion_date_str}
+
+Planned Duration: {planned_duration} days
+Actual Duration: {actual_duration} days
+Delay: {delay_days} days
+
+Penalty Amount: ₹ {penalty_amount:,.2f}
+Delay Reason: {delay_reason if delay_reason else 'Not specified'}
+            """
             
-            # Store calculation
-            self.current_calculation = {
-                'project_name': project_name,
-                'planned_start_date': planned_start,
-                'actual_start_date': actual_start,
-                'planned_completion_date': planned_completion,
-                'actual_completion_date': actual_completion,
-                'delay_days': total_delay,
-                'delay_reason': delay_reason
-            }
+            self.results_text.delete("1.0", "end")
+            self.results_text.insert("1.0", result_text)
+            
+            # Save to database with new structure (no project_name)
+            self.cursor.execute('''
+                INSERT INTO delay_records (
+                    start_date, completion_date, actual_completion_date,
+                    delay_days, delay_reason, penalty_amount, date_created
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                start_date_str, completion_date_str, actual_completion_date_str,
+                delay_days, delay_reason, penalty_amount,
+                datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            ))
+            
+            self.conn.commit()
+            
+            messagebox.showinfo("Success", f"Delay calculated successfully!\nDelay: {delay_days} days")
             
         except Exception as e:
             messagebox.showerror("Error", f"Calculation error: {str(e)}")
     
     def save_calculation(self):
         """Save calculation record"""
-        if not hasattr(self, 'current_calculation'):
-            messagebox.showwarning("Warning", "Please calculate delay first")
-            return
-        
-        try:
-            calc = self.current_calculation
-            self.cursor.execute('''
-                INSERT INTO delay_records (
-                    project_name, planned_start_date, actual_start_date, 
-                    planned_completion_date, actual_completion_date, 
-                    delay_days, delay_reason, penalty_amount, date_created
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                calc['project_name'],
-                calc['planned_start_date'],
-                calc['actual_start_date'],
-                calc['planned_completion_date'],
-                calc['actual_completion_date'],
-                calc['delay_days'],
-                calc['delay_reason'],
-                0.0,  # Simple penalty calculation
-                datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            ))
-            
-            self.conn.commit()
-            messagebox.showinfo("Success", "Calculation saved successfully!")
-            
-        except Exception as e:
-            messagebox.showerror("Error", f"Save error: {str(e)}")
+        # Since we're now saving directly in calculate_delay, this method can be simplified
+        # or we can remove it entirely. For now, let's just show a message.
+        messagebox.showinfo("Info", "Calculation already saved during delay calculation.")
     
     def clear_form(self):
         """Clear form"""
-        self.project_name_entry.delete(0, "end")
-        self.planned_start_entry.delete(0, "end")
-        self.actual_start_entry.delete(0, "end")
-        self.planned_completion_entry.delete(0, "end")
+        self.start_entry.delete(0, "end")
+        self.completion_entry.delete(0, "end")
         self.actual_completion_entry.delete(0, "end")
         self.delay_reason_entry.delete(0, "end")
         
         self.results_text.delete("1.0", "end")
-        self.results_text.insert("1.0", "Enter project details and click 'Calculate Delay'")
-        
-        if hasattr(self, 'current_calculation'):
-            delattr(self, 'current_calculation')
+        self.results_text.insert("1.0", "Enter dates and click 'Calculate Delay'")
     
     def print_results(self):
         """Print results"""
         try:
             results = self.results_text.get("1.0", "end-1c")
-            if results and results != "Enter project details and click 'Calculate Delay'":
+            if results and results != "Enter dates and click 'Calculate Delay'":
                 print("=" * 50)
                 print("DELAY CALCULATION REPORT")
                 print("=" * 50)

@@ -8,6 +8,7 @@ from tkinter import messagebox
 import webbrowser
 import os
 import sys
+import subprocess
 
 class PWDMainLanding:
     def __init__(self):
@@ -233,35 +234,40 @@ class PWDMainLanding:
     def open_hindi_bill(self):
         """Open Hindi Bill Note tool"""
         try:
-            os.system("python hindi_bill_simple.py")
+            # Fixed: Use correct file name
+            subprocess.Popen([sys.executable, "hindi_bill_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Hindi Bill Note: {e}")
     
     def open_stamp_duty(self):
         """Open Stamp Duty tool"""
         try:
-            os.system("python stamp_duty_simple.py")
+            # Fixed: Use correct file name
+            subprocess.Popen([sys.executable, "stamp_duty_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Stamp Duty Calculator: {e}")
     
     def open_emd_refund(self):
         """Open EMD Refund tool"""
         try:
-            os.system("python simple_app.py")
+            # Fixed: Use correct file name
+            subprocess.Popen([sys.executable, "emd_refund_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open EMD Refund: {e}")
     
     def open_delay_calculator(self):
         """Open Delay Calculator tool"""
         try:
-            os.system("python simple_app.py")
+            # Fixed: Use correct file name
+            subprocess.Popen([sys.executable, "delay_calculator_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Delay Calculator: {e}")
     
     def open_financial_analysis(self):
         """Open Financial Analysis tool"""
         try:
-            os.system("python simple_app.py")
+            # Fixed: Use correct file name
+            subprocess.Popen([sys.executable, "financial_analysis_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Financial Analysis: {e}")
     

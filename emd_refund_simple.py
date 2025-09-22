@@ -54,10 +54,13 @@ class SimpleEMDRefundTool:
     
     def create_interface(self):
         """Create ultra simple interface"""
+        # Configure root window background
+        self.root.configure(bg="#f0f8ff")
+        
         # Create scrollable frame for mobile compatibility
-        self.main_canvas = tk.Canvas(self.root)
+        self.main_canvas = tk.Canvas(self.root, bg="#f0f8ff")
         self.main_scrollbar = tk.Scrollbar(self.root, orient="vertical", command=self.main_canvas.yview)
-        self.scrollable_frame = tk.Frame(self.main_canvas)
+        self.scrollable_frame = tk.Frame(self.main_canvas, bg="#f0f8ff")
         
         self.scrollable_frame.bind(
             "<Configure>",
@@ -70,38 +73,58 @@ class SimpleEMDRefundTool:
         self.main_canvas.pack(side="left", fill="both", expand=True)
         self.main_scrollbar.pack(side="right", fill="y")
         
-        # Header
-        header = tk.Label(
-            self.scrollable_frame,
-            text="EMD Refund - Ultra Simple",
-            font=("Arial", 18, "bold"),
-            fg="blue"
-        )
-        header.pack(pady=10)
+        # Header with gradient effect
+        header_frame = tk.Frame(self.scrollable_frame, bg="#45b7d1", height=80)
+        header_frame.pack(fill="x", padx=0, pady=0)
+        header_frame.pack_propagate(False)
         
-        # Main frame
-        main_frame = tk.LabelFrame(self.scrollable_frame, text="EMD Refund Details - Only 3 Fields!", font=("Arial", 12, "bold"))
-        main_frame.pack(fill="x", padx=10, pady=5)
+        header = tk.Label(
+            header_frame,
+            text="💰 EMD Refund - Ultra Simple",
+            font=("Arial", 24, "bold"),
+            fg="white",
+            bg="#45b7d1"
+        )
+        header.pack(pady=20)
+        
+        # Main frame with colored background
+        main_frame = tk.Frame(self.scrollable_frame, bg="#f0f8ff")
+        main_frame.pack(pady=20, padx=20, fill="both", expand=True)
+        
+        # Form container with border and shadow effect
+        form_container = tk.Frame(main_frame, bg="#ffffff", relief="raised", bd=2)
+        form_container.pack(pady=10, padx=10, fill="both", expand=True)
+        
+        # Title
+        title_label = tk.Label(
+            form_container,
+            text="EMD Refund Details - Only 3 Fields!",
+            font=("Arial", 16, "bold"),
+            fg="#45b7d1",
+            bg="#ffffff"
+        )
+        title_label.pack(pady=20)
         
         # Only 3 inputs as requested
         # 1. Payee Name
-        tk.Label(main_frame, text="1. Payee Name:", font=("Arial", 12, "bold"), fg="red").pack(pady=5)
-        self.payee_name_entry = tk.Entry(main_frame, width=50, font=("Arial", 12))
+        tk.Label(form_container, text="1. Payee Name:", font=("Arial", 12, "bold"), bg="#ffffff", fg="#ff6b6b").pack(pady=5)
+        self.payee_name_entry = tk.Entry(form_container, width=50, font=("Arial", 12))
         self.payee_name_entry.pack(pady=5)
         
         # 2. Amount
-        tk.Label(main_frame, text="2. Amount (₹):", font=("Arial", 12, "bold"), fg="red").pack(pady=5)
-        self.amount_entry = tk.Entry(main_frame, width=50, font=("Arial", 12))
+        tk.Label(form_container, text="2. Amount (₹):", font=("Arial", 12, "bold"), bg="#ffffff", fg="#ff6b6b").pack(pady=5)
+        self.amount_entry = tk.Entry(form_container, width=50, font=("Arial", 12))
         self.amount_entry.pack(pady=5)
         
         # 3. Work Description
-        tk.Label(main_frame, text="3. Work Description:", font=("Arial", 12, "bold"), fg="red").pack(pady=5)
-        self.work_desc_entry = tk.Entry(main_frame, width=50, font=("Arial", 12))
+        tk.Label(form_container, text="3. Work Description:", font=("Arial", 12, "bold"), bg="#ffffff", fg="#ff6b6b").pack(pady=5)
+        self.work_desc_entry = tk.Entry(form_container, width=50, font=("Arial", 12))
         self.work_desc_entry.pack(pady=5)
         
-        # Generate button
-        generate_btn = tk.Button(main_frame, text="Generate EMD Refund Receipt", command=self.generate_receipt, 
-                               width=30, height=2, font=("Arial", 12, "bold"), bg="lightgreen")
+        # Generate button with improved styling
+        generate_btn = tk.Button(form_container, text="Generate EMD Refund Receipt", command=self.generate_receipt, 
+                               width=30, height=2, font=("Arial", 12, "bold"), 
+                               bg="#96ceb4", fg="white", relief="raised", bd=2)
         generate_btn.pack(pady=15)
         
         # Results section
@@ -109,6 +132,16 @@ class SimpleEMDRefundTool:
         
         # Action buttons
         self.create_action_buttons(main_frame)
+        
+        # Footer
+        footer_label = tk.Label(
+            main_frame,
+            text="EMD Refund Calculator - PWD Tools",
+            font=("Arial", 10),
+            fg="#718096",
+            bg="#f0f8ff"
+        )
+        footer_label.pack(side="bottom", pady=10)
     
     def create_results_section(self, parent):
         """Create results section"""

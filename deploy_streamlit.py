@@ -26,7 +26,7 @@ def run_streamlit_instance(port, instance_name):
         # Use Popen to run in background
         process = subprocess.Popen([
             sys.executable, "-m", "streamlit", "run", 
-            "streamlit_landing.py", 
+            "streamlit_app.py",  # This is correct now
             "--server.port", str(port),
             "--server.headless", "true"
         ])
