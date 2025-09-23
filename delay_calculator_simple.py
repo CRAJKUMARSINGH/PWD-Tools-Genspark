@@ -224,14 +224,18 @@ class SimpleDelayCalculatorTool:
         self.create_action_buttons(main_frame)
         
         # Footer
+        footer_frame = tk.Frame(main_frame, bg="#2E8B57", height=40)
+        footer_frame.pack(fill="x", pady=(10, 0))
+        footer_frame.pack_propagate(False)
+        
         footer_label = tk.Label(
-            main_frame,
-            text="Delay Calculator - PWD Tools",
-            font=("Arial", 10),
-            fg="#718096",
-            bg="#f0f8ff"
+            footer_frame,
+            text="Delay Calculator - PWD Tools | Designed for Lower Divisional Clerks",
+            font=("Arial", 9),
+            fg="white",
+            bg="#2E8B57"
         )
-        footer_label.pack(side="bottom", pady=10)
+        footer_label.pack(pady=10)
     
     def create_date_fields(self, parent):
         """Create date fields with calendar"""
@@ -311,7 +315,7 @@ class SimpleDelayCalculatorTool:
     
     def create_results_section(self, parent):
         """Create results section"""
-        results_frame = tk.LabelFrame(parent, text="Delay Calculation Results", font=("Arial", 12, "bold"))
+        results_frame = tk.LabelFrame(parent, text="Delay Calculation Results", font=("Arial", 12, "bold"), fg="#ff6b6b")
         results_frame.pack(fill="both", expand=True, padx=5, pady=5)
         
         # Results display
@@ -329,19 +333,22 @@ class SimpleDelayCalculatorTool:
     
     def create_action_buttons(self, parent):
         """Create action buttons"""
-        button_frame = tk.Frame(parent)
-        button_frame.pack(fill="x", padx=5, pady=5)
+        button_frame = tk.Frame(parent, bg="#f0f8ff")
+        button_frame.pack(fill="x", padx=5, pady=10)
         
-        save_btn = tk.Button(button_frame, text="Save Calculation", command=self.save_calculation, 
-                           width=18, height=1, font=("Arial", 9), bg="lightgreen")
+        save_btn = tk.Button(button_frame, text="💾 Save Calculation", command=self.save_calculation, 
+                           width=18, height=2, font=("Arial", 9, "bold"), 
+                           bg="#96CEB4", fg="white", relief="raised", bd=2)
         save_btn.pack(side="left", padx=5)
         
-        clear_btn = tk.Button(button_frame, text="Clear Form", command=self.clear_form, 
-                            width=15, height=1, font=("Arial", 9), bg="lightgray")
+        clear_btn = tk.Button(button_frame, text="🔄 Clear Form", command=self.clear_form, 
+                            width=15, height=2, font=("Arial", 9, "bold"), 
+                            bg="#FFEAA7", fg="black", relief="raised", bd=2)
         clear_btn.pack(side="left", padx=5)
         
-        print_btn = tk.Button(button_frame, text="Print Results", command=self.print_results, 
-                            width=15, height=1, font=("Arial", 9), bg="lightcoral")
+        print_btn = tk.Button(button_frame, text="🖨️ Print Results", command=self.print_results, 
+                            width=15, height=2, font=("Arial", 9, "bold"), 
+                            bg="#DDA0DD", fg="white", relief="raised", bd=2)
         print_btn.pack(side="left", padx=5)
     
     def calculate_delay(self):

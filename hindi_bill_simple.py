@@ -101,7 +101,8 @@ class SimpleCalendarWidget:
             if self.callback:
                 self.callback(selected_date)
             
-            self.window.destroy()
+            if self.window:
+                self.window.destroy()
         except Exception as e:
             messagebox.showerror("Error", f"Invalid date: {e}")
 
@@ -157,10 +158,13 @@ class SimpleHindiBillNoteTool:
     
     def create_interface(self):
         """Create Hindi interface"""
+        # Configure root window background
+        self.root.configure(bg="#f0f8ff")
+        
         # Create scrollable frame for mobile compatibility
-        self.main_canvas = tk.Canvas(self.root)
+        self.main_canvas = tk.Canvas(self.root, bg="#f0f8ff")
         self.main_scrollbar = tk.Scrollbar(self.root, orient="vertical", command=self.main_canvas.yview)
-        self.scrollable_frame = tk.Frame(self.main_canvas)
+        self.scrollable_frame = tk.Frame(self.main_canvas, bg="#f0f8ff")
         
         self.scrollable_frame.bind(
             "<Configure>",
@@ -173,41 +177,74 @@ class SimpleHindiBillNoteTool:
         self.main_canvas.pack(side="left", fill="both", expand=True)
         self.main_scrollbar.pack(side="right", fill="y")
         
-        # Header
-        header = tk.Label(
-            self.scrollable_frame,
-            text="बिल नोट शीट जेनरेटर (हिन्दी)",
-            font=("Arial", 18, "bold"),
-            fg="blue"
-        )
-        header.pack(pady=10)
+        # Header with gradient effect
+        header_frame = tk.Frame(self.scrollable_frame, bg="#FF6B6B", height=80)
+        header_frame.pack(fill="x", padx=0, pady=0)
+        header_frame.pack_propagate(False)
         
-        # Main frame
-        main_frame = tk.Frame(self.scrollable_frame)
-        main_frame.pack(fill="x", padx=10, pady=5)
+        header = tk.Label(
+            header_frame,
+            text="📝 बिल नोट शीट जेनरेटर (हिन्दी)",
+            font=("Arial", 24, "bold"),
+            fg="white",
+            bg="#FF6B6B"
+        )
+        header.pack(pady=20)
+        
+        # Main frame with colored background
+        main_frame = tk.Frame(self.scrollable_frame, bg="#f0f8ff")
+        main_frame.pack(pady=20, padx=20, fill="both", expand=True)
+        
+        # Form container with border and shadow effect
+        form_container = tk.Frame(main_frame, bg="#ffffff", relief="raised", bd=2)
+        form_container.pack(pady=10, padx=10, fill="both", expand=True)
+        
+        # Title
+        title_label = tk.Label(
+            form_container,
+            text="बिल नोट शीट जेनरेटर",
+            font=("Arial", 16, "bold"),
+            fg="#FF6B6B",
+            bg="#ffffff"
+        )
+        title_label.pack(pady=20)
         
         # Bill Type Selection
-        bill_type_frame = tk.LabelFrame(main_frame, text="बिल का प्रकार", font=("Arial", 12, "bold"))
+        bill_type_frame = tk.LabelFrame(form_container, text="बिल का प्रकार", font=("Arial", 12, "bold"), fg="#2E8B57")
         bill_type_frame.pack(fill="x", padx=5, pady=5)
         
         self.bill_type_var = tk.StringVar(value="running")
-        radio_frame = tk.Frame(bill_type_frame)
+        radio_frame = tk.Frame(bill_type_frame, bg="#ffffff")
         radio_frame.pack(pady=5)
         
-        running_radio = tk.Radiobutton(radio_frame, text="रनिंग बिल", variable=self.bill_type_var, value="running")
+        running_radio = tk.Radiobutton(radio_frame, text="रनिंग बिल", variable=self.bill_type_var, value="running", bg="#ffffff")
         running_radio.pack(side="left", padx=10, pady=5)
         
-        final_radio = tk.Radiobutton(radio_frame, text="फाइनल बिल", variable=self.bill_type_var, value="final")
+        final_radio = tk.Radiobutton(radio_frame, text="फाइनल बिल", variable=self.bill_type_var, value="final", bg="#ffffff")
         final_radio.pack(side="left", padx=10, pady=5)
         
         # Input fields
-        self.create_input_fields(main_frame)
+        self.create_input_fields(form_container)
         
         # Buttons
-        self.create_buttons(main_frame)
+        self.create_buttons(form_container)
         
         # Results
         self.create_results_section(main_frame)
+        
+        # Footer
+        footer_frame = tk.Frame(main_frame, bg="#2E8B57", height=40)
+        footer_frame.pack(fill="x", pady=(10, 0))
+        footer_frame.pack_propagate(False)
+        
+        footer_label = tk.Label(
+            footer_frame,
+            text="बिल नोट शीट जेनरेटर - PWD Tools | लोअर डिवीजनल क्लर्क्स के लिए डिज़ाइन किया गया",
+            font=("Arial", 9),
+            fg="white",
+            bg="#2E8B57"
+        )
+        footer_label.pack(pady=10)
     
     def create_input_fields(self, parent):
         """Create input fields"""
@@ -355,52 +392,75 @@ class SimpleHindiBillNoteTool:
     
     def create_buttons(self, parent):
         """Create buttons"""
-        button_frame = tk.Frame(parent)
-        button_frame.pack(fill="x", padx=5, pady=5)
+        button_frame = tk.Frame(parent, bg="#ffffff")
+        button_frame.pack(fill="x", padx=5, pady=15)
         
         generate_btn = tk.Button(
             button_frame,
-            text="नोट शीट जनरेट करें",
+            text="📄 नोट शीट जनरेट करें",
             command=self.generate_note,
             width=20,
             height=2,
-            font=("Arial", 10, "bold"),
-            bg="lightblue"
+            font=("Arial", 12, "bold"),
+            bg="#4ECDC4",
+            fg="white",
+            relief="raised",
+            bd=2
         )
         generate_btn.pack(side="left", padx=5)
         
-        save_btn = tk.Button(
-            button_frame,
-            text="सेव करें",
-            command=self.save_note,
-            width=15,
-            height=2,
-            font=("Arial", 10, "bold"),
-            bg="lightgreen"
-        )
-        save_btn.pack(side="left", padx=5)
-        
         clear_btn = tk.Button(
             button_frame,
-            text="क्लियर करें",
+            text="🔄 फॉर्म क्लियर करें",
             command=self.clear_form,
-            width=15,
+            width=18,
             height=2,
-            font=("Arial", 10, "bold"),
-            bg="lightgray"
+            font=("Arial", 12, "bold"),
+            bg="#FFEAA7",
+            fg="black",
+            relief="raised",
+            bd=2
         )
         clear_btn.pack(side="left", padx=5)
+        
+        copy_btn = tk.Button(
+            button_frame,
+            text="📋 कॉपी करें",
+            command=self.copy_to_clipboard,
+            width=15,
+            height=2,
+            font=("Arial", 12, "bold"),
+            bg="#96CEB4",
+            fg="white",
+            relief="raised",
+            bd=2
+        )
+        copy_btn.pack(side="left", padx=5)
+        
+        print_btn = tk.Button(
+            button_frame,
+            text="🖨️ प्रिंट करें",
+            command=self.print_note,
+            width=15,
+            height=2,
+            font=("Arial", 12, "bold"),
+            bg="#DDA0DD",
+            fg="white",
+            relief="raised",
+            bd=2
+        )
+        print_btn.pack(side="left", padx=5)
     
     def create_results_section(self, parent):
         """Create results section"""
-        results_frame = tk.LabelFrame(parent, text="जनरेटेड नोट", font=("Arial", 12, "bold"))
+        results_frame = tk.LabelFrame(parent, text="जनरेटेड नोट शीट", font=("Arial", 12, "bold"), fg="#FF6B6B")
         results_frame.pack(fill="both", expand=True, padx=5, pady=5)
         
-        # Responsive textbox with scrollbar - shrunk vertically by 15%
+        # Results display
         text_frame = tk.Frame(results_frame)
         text_frame.pack(fill="both", expand=True, padx=5, pady=5)
         
-        self.results_text = tk.Text(text_frame, height=8, font=("Arial", 10), wrap="word")  # Reduced from 10 to 8 (15% reduction)
+        self.results_text = tk.Text(text_frame, height=15, font=("Arial", 11), wrap="word")
         scrollbar = tk.Scrollbar(text_frame, orient="vertical", command=self.results_text.yview)
         self.results_text.configure(yscrollcommand=scrollbar.set)
         
@@ -409,32 +469,6 @@ class SimpleHindiBillNoteTool:
         
         self.results_text.insert("1.0", "फॉर्म भरें और 'नोट शीट जनरेट करें' पर क्लिक करें।")
         
-        # Copy and Print buttons
-        action_btn_frame = tk.Frame(results_frame)
-        action_btn_frame.pack(fill="x", padx=5, pady=5)
-        
-        copy_btn = tk.Button(
-            action_btn_frame,
-            text="कॉपी करें",
-            command=self.copy_to_clipboard,
-            width=12,
-            height=1,
-            font=("Arial", 9),
-            bg="lightyellow"
-        )
-        copy_btn.pack(side="left", padx=5)
-        
-        print_btn = tk.Button(
-            action_btn_frame,
-            text="प्रिंट करें",
-            command=self.print_note,
-            width=12,
-            height=1,
-            font=("Arial", 9),
-            bg="lightcoral"
-        )
-        print_btn.pack(side="left", padx=5)
-    
     def generate_note(self):
         """Generate Hindi bill note"""
         try:

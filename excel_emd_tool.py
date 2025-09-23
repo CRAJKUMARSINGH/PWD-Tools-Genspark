@@ -207,8 +207,8 @@ Note: This is a demonstration. In production, this would:
     def open_web_tool(self):
         """Open web EMD tool"""
         try:
-            webbrowser.open("https://raj-bill-generator-v01.streamlit.app/")
-            messagebox.showinfo("Success", "Opening Web EMD Tool in browser...")
+            webbrowser.open("https://marudharhr.onrender.com/")
+            messagebox.showinfo("Success", "Opening Excel EMD Web Tool in browser...")
         except Exception as e:
             messagebox.showerror("Error", f"Could not open browser: {str(e)}")
     
