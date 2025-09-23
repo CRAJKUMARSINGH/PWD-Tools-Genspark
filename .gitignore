@@ -159,29 +159,31 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Database files
-*.db
-*.sqlite3
+# VS Code
+.vscode/
 
-# Excel files
-*.xlsx
-*.xls
+# Large files
+*.zip
+*.exe
+*.msi
+*.deb
+*.dmg
+*.iso
+*.img
+*.bin
 
-# Test result files
-*.csv
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Reference repositories
-reference github repositories/
+# Logs
+*.log
 
-# Backup files
-*.bak
-backups/
-
-# Export files
-exports/
-
-# Templates
-templates/
-
-# Data files
-data/
+# Temp files
+*.tmp
+*.temp
