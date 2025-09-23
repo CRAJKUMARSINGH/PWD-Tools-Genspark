@@ -158,28 +158,28 @@ class PWDToolsSimple:
     def open_bill_note(self):
         """Open Bill Note Sheet (dedicated tool)"""
         try:
-            subprocess.Popen([sys.executable, "bill_note_sheet_tool.py"])
+            subprocess.Popen([sys.executable, "bill_generator_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Bill Note Sheet Tool: {str(e)}")
     
     def open_emd_refund(self):
         """Open EMD Refund (dedicated tool)"""
         try:
-            subprocess.Popen([sys.executable, "emd_refund_tool.py"])
+            subprocess.Popen([sys.executable, "emd_refund_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open EMD Refund Tool: {str(e)}")
     
     def open_deductions_table(self):
         """Open Deductions Table (dedicated tool)"""
         try:
-            subprocess.Popen([sys.executable, "deductions_table_tool.py"])
+            subprocess.Popen([sys.executable, "deviation_generator_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Deductions Table Tool: {str(e)}")
     
     def open_delay_calculator(self):
         """Open Delay Calculator (dedicated tool)"""
         try:
-            subprocess.Popen([sys.executable, "delay_calculator_tool.py"])
+            subprocess.Popen([sys.executable, "delay_calculator_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Delay Calculator Tool: {str(e)}")
     
@@ -200,14 +200,14 @@ class PWDToolsSimple:
     def open_stamp_duty(self):
         """Open Stamp Duty Calculator"""
         try:
-            subprocess.Popen([sys.executable, "stamp_duty_working.py"])
+            subprocess.Popen([sys.executable, "stamp_duty_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Stamp Duty Calculator: {str(e)}")
     
     def open_excel_emd(self):
         """Open Excel se EMD (dedicated tool)"""
         try:
-            subprocess.Popen([sys.executable, "excel_emd_tool.py"])
+            subprocess.Popen([sys.executable, "hindi_bill_simple.py"])
         except Exception as e:
             messagebox.showerror("Error", f"Could not open Excel se EMD Tool: {str(e)}")
     

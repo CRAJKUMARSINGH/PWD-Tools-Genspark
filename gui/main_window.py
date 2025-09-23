@@ -304,6 +304,13 @@ class PWDToolsMainWindow:
         tools_menu.add_command(label="Excel se EMD", command=self.open_excel_emd)
         tools_menu.add_command(label="Bill Note Sheet", command=self.open_bill_note)
         tools_menu.add_command(label="EMD Refund", command=self.open_emd_refund)
+        tools_menu.add_command(label="Deductions Table", command=self.open_deductions_table)
+        tools_menu.add_command(label="Delay Calculator", command=self.open_delay_calculator)
+        tools_menu.add_command(label="Security Refund", command=self.open_security_refund)
+        tools_menu.add_command(label="Financial Progress", command=self.open_financial_progress)
+        tools_menu.add_command(label="Stamp Duty", command=self.open_stamp_duty)
+        tools_menu.add_command(label="Bill & Deviation", command=self.open_bill_deviation)
+        tools_menu.add_command(label="Tender Processing", command=self.open_tender_processing)
         
         # Help menu
         help_menu = tk.Menu(menubar, tearoff=0)
