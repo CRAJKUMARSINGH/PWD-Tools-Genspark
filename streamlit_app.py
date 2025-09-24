@@ -2,23 +2,46 @@ from pathlib import Path
 
 import streamlit as st
 
+st.set_page_config(page_title="PWD Tools - Redirect", layout="centered")
 
-st.set_page_config(page_title="PWD Tools - Dashboard & Review", layout="wide")
+st.title("🏗️ PWD Tools")
+st.subheader("Redirecting...")
 
-st.title("🏗️ PWD Tools - Dashboard")
-st.caption("Streamlit viewer that links to tools and shows color/landing screenshots.")
+st.info("You are being redirected to the correct PWD Tools application.")
+
+st.page_link("app.py", label="Click here if you are not redirected automatically", icon="➡️")
+
+st.markdown("""
+<div style="margin-top: 30px; padding: 20px; background-color: #f0f8f5; border-radius: 10px;">
+    <h3>ℹ️ Information</h3>
+    <p>The main application has moved to <code>app.py</code>.</p>
+    <p>If you are seeing this page, you may have accessed an old URL.</p>
+    <p>Please update your bookmarks to use the new application.</p>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div style="text-align: center; color: #666; margin-top: 30px;">
+    <p>Prepared for Mrs. Premlata Jain, AAO, PWD Udaipur</p>
+    <p>© 2024 PWD Tools - All tools designed for efficient PWD operations</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Sidebar navigation
+st.sidebar.title("🏗️ PWD Tools Navigation")
+st.sidebar.markdown("Select a tool from the list below:")
 
 # Tool registry (10 tools)
 TOOLS = [
         {
-                "key": "excel_emd",
+                "key": "excel_se_emd",
                 "name": "Excel se EMD",
                 "icon": "📊",
                 "desc": "Hand Receipt Generator from Excel files",
                 "external_url": None,
         },
         {
-                "key": "bill_note",
+                "key": "bill_note_sheet",
                 "name": "Bill Note Sheet",
                 "icon": "📝",
                 "desc": "Bill Note Sheet Generator for PWD documentation",
@@ -82,6 +105,17 @@ TOOLS = [
         },
 ]
 
+# Create sidebar navigation
+for i, tool in enumerate(TOOLS):
+    if tool["external_url"]:
+        st.sidebar.link_button(f"{tool['icon']} {tool['name']}", tool["external_url"])
+    else:
+        st.sidebar.page_link(f"pages/{i+1:02d}_{tool['key']}.py", label=f"{tool['icon']} {tool['name']}")
+
+# Main content
+st.title("🏗️ PWD Tools - Dashboard")
+st.caption("Streamlit viewer that links to tools and shows color/landing screenshots.")
+
 base_dir = Path("screenshots")
 
 # Landing screenshot
@@ -106,7 +140,7 @@ for i, tool in enumerate(TOOLS):
                 if tool["external_url"]:
                         st.link_button("Open Web Tool", tool["external_url"])
                 else:
-                        st.button("Desktop Tool (local)", disabled=True, help="Desktop tools run locally via the desktop app")
+                        st.page_link(f"pages/{i+1:02d}_{tool['key']}.py", label="Open Tool", icon="▶️")
                 # Screenshots if present
                 tool_dir = base_dir / tool["key"]
                 images = sorted(tool_dir.glob("*.png")) if tool_dir.exists() else []
@@ -114,3 +148,12 @@ for i, tool in enumerate(TOOLS):
                         st.image([str(p) for p in images[:3]], caption=[p.name for p in images[:3]], use_container_width=True)
                 else:
                         st.write("No screenshots yet.")
+
+# Footer
+st.divider()
+st.markdown("""
+<div style="text-align: center; color: #666;">
+<p>Prepared for Mrs. Premlata Jain, AAO, PWD Udaipur</p>
+<p>© 2024 PWD Tools - All tools designed for efficient PWD operations</p>
+</div>
+""", unsafe_allow_html=True)

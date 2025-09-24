@@ -25,7 +25,7 @@ This application is designed for deployment on Streamlit Cloud:
 2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
 3. Create a new app
 4. Select your forked repository
-5. Set the main file path to `app.py`
+5. Set the main file path to `app.py` (NOT streamlit_app.py)
 6. Deploy the app
 
 ## Requirements

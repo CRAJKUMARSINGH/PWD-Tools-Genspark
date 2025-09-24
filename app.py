@@ -36,16 +36,18 @@ tools = [
         "description": "Generate hand receipts from Excel files with automated processing",
         "icon": "📊",
         "color": "#8B5CF6",  # Purple
-        "url": "https://marudharhr.onrender.com/",
-        "type": "external"
+        "url": None,
+        "page": "01_excel_se_emd",
+        "type": "internal"
     },
     {
         "name": "Bill Note Sheet",
         "description": "Create running and final bills with standardized PWD formats",
         "icon": "📋",
         "color": "#10B981",  # Green
-        "url": "https://raj-bill-generator-v01.streamlit.app/",
-        "type": "external"
+        "url": None,
+        "page": "02_bill_note_sheet",
+        "type": "internal"
     },
     {
         "name": "EMD Refund",
@@ -53,6 +55,7 @@ tools = [
         "icon": "💰",
         "color": "#F59E0B",  # Orange
         "url": None,
+        "page": "03_emd_refund",
         "type": "internal"
     },
     {
@@ -61,6 +64,7 @@ tools = [
         "icon": "🧮",
         "color": "#EF4444",  # Red
         "url": None,
+        "page": "04_deductions_table",
         "type": "internal"
     },
     {
@@ -69,6 +73,7 @@ tools = [
         "icon": "⏱️",
         "color": "#6366F1",  # Indigo
         "url": None,
+        "page": "05_delay_calculator",
         "type": "internal"
     },
     {
@@ -77,6 +82,7 @@ tools = [
         "icon": "📈",
         "color": "#10B981",  # Green
         "url": None,
+        "page": "07_financial_progress",
         "type": "internal"
     },
     {
@@ -85,6 +91,7 @@ tools = [
         "icon": "🔒",
         "color": "#8B5CF6",  # Purple
         "url": None,
+        "page": "06_security_refund",
         "type": "internal"
     },
     {
@@ -93,6 +100,7 @@ tools = [
         "icon": "🎫",
         "color": "#F59E0B",  # Orange
         "url": None,
+        "page": "08_stamp_duty",
         "type": "internal"
     },
     {
@@ -100,7 +108,7 @@ tools = [
         "description": "Infrastructure billing with deviation tracking",
         "icon": "📐",
         "color": "#EF4444",  # Red
-        "url": "https://raj-bill-generator-v01.streamlit.app/",
+        "url": "https://stream-bill-generator-pjzpbb7a9fdxfmpgpg7t4d.streamlit.app/",
         "type": "external"
     },
     {
@@ -108,8 +116,8 @@ tools = [
         "description": "Streamline tender processing workflows",
         "icon": "📄",
         "color": "#6366F1",  # Indigo
-        "url": None,
-        "type": "internal"
+        "url": "https://priyankatenderfinal-unlhs2yudbpg2ipxgdggws.streamlit.app/",
+        "type": "external"
     }
 ]
 
@@ -126,9 +134,10 @@ for i, tool in enumerate(tools):
         """, unsafe_allow_html=True)
         
         if tool["type"] == "external" and tool["url"]:
-            if st.button(f"Launch {tool['name']}", key=f"btn_{tool['name']}", use_container_width=True):
-                webbrowser.open(tool["url"])
-        elif tool["type"] == "internal":
+            st.link_button(f"Launch {tool['name']}", tool["url"])
+        elif tool["type"] == "internal" and "page" in tool:
+            st.page_link(f"pages/{tool['page']}.py", label=f"Open {tool['name']}", use_container_width=True)
+        else:
             st.info(f"{tool['name']} tool is available in the desktop version")
 
 # Show credits
