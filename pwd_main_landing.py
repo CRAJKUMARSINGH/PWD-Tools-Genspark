@@ -27,7 +27,7 @@ class PWDMainLanding:
     def create_interface(self):
         """Create colorful main interface"""
         # Header with gradient effect
-        header_frame = tk.Frame(self.root, bg="#2E8B57", height=80)
+        header_frame = tk.Frame(self.root, bg="#2E8B57", height=100)
         header_frame.pack(fill="x", padx=0, pady=0)
         header_frame.pack_propagate(False)
         
@@ -35,17 +35,17 @@ class PWDMainLanding:
         title_label = tk.Label(
             header_frame,
             text="🏗️ PWD Tools Dashboard",
-            font=("Arial", 24, "bold"),
+            font=("Arial", 28, "bold"),
             fg="white",
             bg="#2E8B57"
         )
-        title_label.pack(pady=20)
+        title_label.pack(pady=(25, 5))
         
         # Subtitle
         subtitle_label = tk.Label(
             header_frame,
             text="Infrastructure Management Suite for Lower Divisional Clerks",
-            font=("Arial", 12),
+            font=("Arial", 14),
             fg="#E0FFFF",
             bg="#2E8B57"
         )
@@ -53,20 +53,20 @@ class PWDMainLanding:
         
         # Main content area
         main_frame = tk.Frame(self.root, bg="#f0f8ff")
-        main_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        main_frame.pack(fill="both", expand=True, padx=30, pady=30)
         
-        # Welcome message
-        welcome_frame = tk.Frame(main_frame, bg="#E6F3FF", relief="raised", bd=2)
-        welcome_frame.pack(fill="x", pady=(0, 20))
+        # Welcome message with enhanced styling
+        welcome_frame = tk.Frame(main_frame, bg="#E6F3FF", relief="raised", bd=3)
+        welcome_frame.pack(fill="x", pady=(0, 25))
         
         welcome_label = tk.Label(
             welcome_frame,
             text="🎉 Welcome to PWD Tools - Simple & Efficient!",
-            font=("Arial", 16, "bold"),
+            font=("Arial", 18, "bold"),
             fg="#2E8B57",
             bg="#E6F3FF"
         )
-        welcome_label.pack(pady=15)
+        welcome_label.pack(pady=20)
         
         # Tools grid
         self.create_tools_grid(main_frame)
@@ -84,42 +84,42 @@ class PWDMainLanding:
             {
                 "name": "Hindi Bill Note",
                 "description": "Generate Running & Final Bills in Hindi",
-                "color": "#FF6B6B",
+                "color": "#10B981",
                 "command": self.open_hindi_bill,
                 "icon": "📝"
             },
             {
                 "name": "Stamp Duty Calculator",
                 "description": "Calculate stamp duty with predefined rates",
-                "color": "#4ECDC4",
+                "color": "#F59E0B",
                 "command": self.open_stamp_duty,
                 "icon": "💰"
             },
             {
                 "name": "EMD Refund",
                 "description": "Simple EMD refund with 3 inputs only",
-                "color": "#45B7D1",
+                "color": "#F59E0B",
                 "command": self.open_emd_refund,
                 "icon": "💳"
             },
             {
                 "name": "Delay Calculator",
                 "description": "Calculate project delays easily",
-                "color": "#96CEB4",
+                "color": "#6366F1",
                 "command": self.open_delay_calculator,
                 "icon": "⏰"
             },
             {
                 "name": "Financial Analysis",
                 "description": "Simple financial analysis with calendar",
-                "color": "#FFEAA7",
+                "color": "#8B5CF6",
                 "command": self.open_financial_analysis,
                 "icon": "📊"
             },
             {
                 "name": "Bill Generator Link",
                 "description": "Open online bill generator",
-                "color": "#DDA0DD",
+                "color": "#EF4444",
                 "command": self.open_bill_generator,
                 "icon": "🌐"
             }
@@ -130,8 +130,8 @@ class PWDMainLanding:
             row = i // 2
             col = i % 2
             
-            tool_frame = tk.Frame(tools_frame, bg="white", relief="raised", bd=2)
-            tool_frame.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
+            tool_frame = tk.Frame(tools_frame, bg="white", relief="raised", bd=3)
+            tool_frame.grid(row=row, column=col, padx=15, pady=15, sticky="nsew")
             
             # Configure grid weights
             tools_frame.grid_rowconfigure(row, weight=1)
@@ -141,50 +141,78 @@ class PWDMainLanding:
             icon_label = tk.Label(
                 tool_frame,
                 text=tool["icon"],
-                font=("Arial", 24),
+                font=("Arial", 28),
                 bg="white"
             )
-            icon_label.pack(pady=(15, 5))
+            icon_label.pack(pady=(20, 5))
             
             name_label = tk.Label(
                 tool_frame,
                 text=tool["name"],
-                font=("Arial", 14, "bold"),
+                font=("Arial", 16, "bold"),
                 fg=tool["color"],
                 bg="white"
             )
-            name_label.pack(pady=5)
+            name_label.pack(pady=8)
             
             # Tool description
             desc_label = tk.Label(
                 tool_frame,
                 text=tool["description"],
-                font=("Arial", 10),
-                fg="#666666",
+                font=("Arial", 11),
+                fg="#555555",
                 bg="white",
-                wraplength=200
+                wraplength=220
             )
-            desc_label.pack(pady=5)
+            desc_label.pack(pady=8)
             
-            # Tool button
+            # Tool button with hover effect
             tool_btn = tk.Button(
                 tool_frame,
                 text=f"Open {tool['name']}",
                 command=tool["command"],
-                width=20,
+                width=22,
                 height=2,
-                font=("Arial", 10, "bold"),
+                font=("Arial", 11, "bold"),
                 bg=tool["color"],
                 fg="white",
                 relief="flat",
-                cursor="hand2"
+                cursor="hand2",
+                bd=0
             )
-            tool_btn.pack(pady=15)
+            tool_btn.pack(pady=(15, 20))
+            
+            # Add hover effect
+            self.add_hover_effect(tool_btn, tool["color"])
+    
+    def add_hover_effect(self, button, original_color):
+        """Add hover effect to button"""
+        def on_enter(e):
+            # Lighten color on hover
+            light_color = self.lighten_color(original_color)
+            button.config(bg=light_color)
+        
+        def on_leave(e):
+            button.config(bg=original_color)
+        
+        button.bind("<Enter>", on_enter)
+        button.bind("<Leave>", on_leave)
+    
+    def lighten_color(self, color):
+        """Lighten a hex color"""
+        color_map = {
+            "#10B981": "#34D399",  # Green
+            "#F59E0B": "#FBBF24",  # Amber
+            "#6366F1": "#818CF8",  # Indigo
+            "#8B5CF6": "#A78BFA",  # Purple
+            "#EF4444": "#F87171"   # Red
+        }
+        return color_map.get(color, color)
     
     def create_footer(self, parent):
         """Create colorful footer"""
-        footer_frame = tk.Frame(parent, bg="#2E8B57", height=60)
-        footer_frame.pack(fill="x", pady=(20, 0))
+        footer_frame = tk.Frame(parent, bg="#2E8B57", height=70)
+        footer_frame.pack(fill="x", pady=(25, 0))
         footer_frame.pack_propagate(False)
         
         # Footer content
@@ -195,41 +223,47 @@ class PWDMainLanding:
         version_label = tk.Label(
             footer_content,
             text="Version 1.0.0 | Simple & Efficient",
-            font=("Arial", 10),
+            font=("Arial", 11, "bold"),
             fg="white",
             bg="#2E8B57"
         )
-        version_label.pack(side="left", padx=20, pady=20)
+        version_label.pack(side="left", padx=25, pady=25)
         
         # Right side - Quick actions
         quick_frame = tk.Frame(footer_content, bg="#2E8B57")
-        quick_frame.pack(side="right", padx=20, pady=20)
+        quick_frame.pack(side="right", padx=25, pady=25)
         
         help_btn = tk.Button(
             quick_frame,
             text="Help",
             command=self.show_help,
-            width=8,
+            width=10,
             height=1,
-            font=("Arial", 9),
+            font=("Arial", 10, "bold"),
             bg="#4CAF50",
             fg="white",
-            relief="flat"
+            relief="flat",
+            bd=0,
+            cursor="hand2"
         )
-        help_btn.pack(side="left", padx=5)
+        help_btn.pack(side="left", padx=8)
+        self.add_hover_effect(help_btn, "#4CAF50")
         
         about_btn = tk.Button(
             quick_frame,
             text="About",
             command=self.show_about,
-            width=8,
+            width=10,
             height=1,
-            font=("Arial", 9),
+            font=("Arial", 10, "bold"),
             bg="#2196F3",
             fg="white",
-            relief="flat"
+            relief="flat",
+            bd=0,
+            cursor="hand2"
         )
-        about_btn.pack(side="left", padx=5)
+        about_btn.pack(side="left", padx=8)
+        self.add_hover_effect(about_btn, "#2196F3")
     
     def open_hindi_bill(self):
         """Open Hindi Bill Note tool"""

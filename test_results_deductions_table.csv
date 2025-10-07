@@ -1,6 +1,0 @@
-bill_number,contractor_name,gross_amount,tds_rate,security_rate,other_deductions,net_amount
-BILL-95661,Contractor I,361385.01,2.9,5.7,34593.11,295712.78914
-BILL-92912,Contractor F,3430702.56,4.0,10.0,15737.11,2934667.0916
-BILL-61578,Contractor J,2085397.77,4.4,4.4,24944.88,1876937.88624
-BILL-53616,Contractor G,316416.05,4.8,3.2,19120.58,271982.186
-BILL-12671,Contractor H,3086956.5,0.7,8.7,27248.19,2769534.399

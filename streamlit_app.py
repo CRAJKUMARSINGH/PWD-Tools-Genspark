@@ -2,30 +2,8 @@ from pathlib import Path
 
 import streamlit as st
 
-st.set_page_config(page_title="PWD Tools - Redirect", layout="centered")
 
-st.title("🏗️ PWD Tools")
-st.subheader("Redirecting...")
-
-st.info("You are being redirected to the correct PWD Tools application.")
-
-st.page_link("app.py", label="Click here if you are not redirected automatically", icon="➡️")
-
-st.markdown("""
-<div style="margin-top: 30px; padding: 20px; background-color: #f0f8f5; border-radius: 10px;">
-    <h3>ℹ️ Information</h3>
-    <p>The main application has moved to <code>app.py</code>.</p>
-    <p>If you are seeing this page, you may have accessed an old URL.</p>
-    <p>Please update your bookmarks to use the new application.</p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div style="text-align: center; color: #666; margin-top: 30px;">
-    <p>Prepared for Mrs. Premlata Jain, AAO, PWD Udaipur</p>
-    <p>© 2024 PWD Tools - All tools designed for efficient PWD operations</p>
-</div>
-""", unsafe_allow_html=True)
+st.set_page_config(page_title="PWD Tools - Dashboard & Review", layout="wide")
 
 # Sidebar navigation
 st.sidebar.title("🏗️ PWD Tools Navigation")

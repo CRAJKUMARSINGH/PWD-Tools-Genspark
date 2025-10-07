@@ -36,7 +36,13 @@ echo 🚀 Launching PWD Tools Desktop...
 echo.
 
 REM Try to run the main application
-if exist "main.py" (
+if exist "app.py" (
+    echo 📱 Starting Optimized Application...
+    python app.py
+) else if exist "pwd_tools_optimized.py" (
+    echo 📱 Starting Optimized PWD Tools...
+    python pwd_tools_optimized.py
+) else if exist "main.py" (
     echo 📱 Starting Main Application...
     python main.py
 ) else if exist "run_app.py" (
@@ -48,7 +54,7 @@ if exist "main.py" (
 ) else (
     echo ❌ ERROR: No application file found
     echo.
-    echo Expected files: main.py, run_app.py, or pwd_tools_simple.py
+    echo Expected files: app.py, pwd_tools_optimized.py, main.py, run_app.py, or pwd_tools_simple.py
     echo.
     pause
     exit /b 1

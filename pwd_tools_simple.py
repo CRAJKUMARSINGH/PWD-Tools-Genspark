@@ -16,8 +16,8 @@ class PWDToolsSimple:
         """Initialize PWD Tools Simple"""
         self.root = tk.Tk()
         self.root.title("PWD Tools - Simple Version")
-        self.root.geometry("600x700")
-        self.root.minsize(600, 700)
+        self.root.geometry("650x750")
+        self.root.minsize(650, 750)
         
         # Create interface
         self.create_interface()
@@ -28,59 +28,59 @@ class PWDToolsSimple:
         self.root.configure(bg="#f0f4f8")
         
         # Header with gradient effect
-        header_frame = tk.Frame(self.root, bg="#667eea", height=80)
+        header_frame = tk.Frame(self.root, bg="#667eea", height=100)
         header_frame.pack(fill="x", padx=0, pady=0)
         header_frame.pack_propagate(False)
         
         header = tk.Label(
             header_frame,
             text="PWD Tools - Desktop Application",
-            font=("Arial", 24, "bold"),
+            font=("Arial", 28, "bold"),
             fg="white",
             bg="#667eea"
         )
-        header.pack(pady=20)
+        header.pack(pady=25)
         
         # Subtitle
         subtitle = tk.Label(
             self.root,
             text="Comprehensive PWD Tools Suite - Enhanced with Beautiful Colors",
-            font=("Arial", 12),
+            font=("Arial", 14),
             fg="#4a5568",
             bg="#f0f4f8"
         )
-        subtitle.pack(pady=10)
+        subtitle.pack(pady=15)
         
         # Main frame with enhanced styling
         main_frame = tk.Frame(self.root, bg="#f0f4f8")
-        main_frame.pack(pady=20, padx=20, fill="both", expand=True)
+        main_frame.pack(pady=30, padx=30, fill="both", expand=True)
         
         # Tools section with enhanced styling
         tools_label = tk.Label(
             main_frame,
             text="🛠️ Available Tools (10 Tools):",
-            font=("Arial", 16, "bold"),
+            font=("Arial", 18, "bold"),
             fg="#2d3748",
             bg="#f0f4f8"
         )
-        tools_label.pack(pady=(0, 15))
+        tools_label.pack(pady=(0, 20))
         
         # Tool buttons
         self.create_tool_buttons(main_frame)
         
         # Footer with enhanced styling
-        footer_frame = tk.Frame(self.root, bg="#2d3748", height=60)
+        footer_frame = tk.Frame(self.root, bg="#2d3748", height=70)
         footer_frame.pack(side="bottom", fill="x", padx=0, pady=0)
         footer_frame.pack_propagate(False)
         
         footer = tk.Label(
             footer_frame,
             text="Prepared on Initiative of Mrs. Premlata Jain, AAO, PWD Udaipur",
-            font=("Arial", 11, "bold"),
+            font=("Arial", 12, "bold"),
             fg="white",
             bg="#2d3748"
         )
-        footer.pack(pady=15)
+        footer.pack(pady=25)
     
     def create_tool_buttons(self, parent):
         """Create tool buttons"""
@@ -99,59 +99,72 @@ class PWDToolsSimple:
         
         # Color schemes for different tool categories
         colors = [
-            "#667eea",  # Bill Note Sheet - Blue
-            "#f093fb",  # EMD Refund - Pink
-            "#4ecdc4",  # Deductions Table - Teal
-            "#45b7d1",  # Delay Calculator - Light Blue
-            "#96ceb4",  # Financial Progress - Green
-            "#feca57",  # Security Refund - Yellow
-            "#ff9ff3",  # Stamp Duty - Magenta
-            "#54a0ff",  # Excel se EMD - Blue
-            "#5f27cd",  # Bill & Deviation - Purple
-            "#00d2d3"   # Faster Performance - Cyan
+            "#10B981",  # Bill Note Sheet - Green
+            "#F59E0B",  # EMD Refund - Orange
+            "#EF4444",  # Deductions Table - Red
+            "#6366F1",  # Delay Calculator - Indigo
+            "#10B981",  # Financial Progress - Green
+            "#8B5CF6",  # Security Refund - Purple
+            "#F59E0B",  # Stamp Duty - Orange
+            "#8B5CF6",  # Excel se EMD - Purple
+            "#EF4444",  # Bill & Deviation - Red
+            "#06B6D4"   # Faster Performance - Cyan
         ]
         
+        # Create a frame to hold all buttons for better layout control
+        buttons_frame = tk.Frame(parent, bg="#f0f4f8")
+        buttons_frame.pack(fill="both", expand=True)
+        
+        # Create buttons in a grid layout (2 columns)
         for i, (tool_name, command) in enumerate(tools):
+            row = i // 2
+            col = i % 2
+            
+            # Tool button frame with enhanced styling
+            tool_frame = tk.Frame(buttons_frame, bg="white", relief="raised", bd=2)
+            tool_frame.grid(row=row, column=col, padx=15, pady=15, sticky="ew")
+            
             btn = tk.Button(
-                parent,
+                tool_frame,
                 text=f"🔧 {tool_name}",
                 command=command,
-                width=30,
-                height=2,
-                font=("Arial", 11, "bold"),
+                width=28,
+                height=3,
+                font=("Arial", 12, "bold"),
                 bg=colors[i],
                 fg="white",
-                relief="raised",
-                bd=2,
+                relief="flat",
+                bd=0,
                 cursor="hand2"
             )
-            btn.pack(pady=8)
+            btn.pack(pady=20, padx=20)
             
             # Add hover effect
-            def make_hover_effect(button, original_color):
-                def on_enter(e):
-                    button.config(bg=self.lighten_color(original_color))
-                def on_leave(e):
-                    button.config(bg=original_color)
-                button.bind("<Enter>", on_enter)
-                button.bind("<Leave>", on_leave)
-            
-            make_hover_effect(btn, colors[i])
+            self.make_hover_effect(btn, colors[i])
+        
+        # Configure grid weights for responsive layout
+        buttons_frame.grid_columnconfigure(0, weight=1)
+        buttons_frame.grid_columnconfigure(1, weight=1)
+    
+    def make_hover_effect(self, button, original_color):
+        """Create hover effect for a button"""
+        def on_enter(e):
+            button.config(bg=self.lighten_color(original_color))
+        def on_leave(e):
+            button.config(bg=original_color)
+        button.bind("<Enter>", on_enter)
+        button.bind("<Leave>", on_leave)
     
     def lighten_color(self, color):
         """Lighten a hex color for hover effect"""
         # Simple color lightening by adding white
         color_map = {
-            "#667eea": "#7a8fec",
-            "#f093fb": "#f2a5fc", 
-            "#4ecdc4": "#6dd5cd",
-            "#45b7d1": "#5bc1d5",
-            "#96ceb4": "#a8d6c0",
-            "#feca57": "#fed069",
-            "#ff9ff3": "#ffb1f5",
-            "#54a0ff": "#66b0ff",
-            "#5f27cd": "#6f37d7",
-            "#00d2d3": "#1ad8d9"
+            "#10B981": "#34D399",   # Green
+            "#F59E0B": "#FBBF24",   # Orange
+            "#EF4444": "#F87171",   # Red
+            "#6366F1": "#818CF8",   # Indigo
+            "#8B5CF6": "#A78BFA",   # Purple
+            "#06B6D4": "#0EA5E9"    # Cyan
         }
         return color_map.get(color, color)
     
