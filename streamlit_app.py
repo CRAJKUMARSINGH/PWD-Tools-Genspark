@@ -84,11 +84,13 @@ TOOLS = [
 ]
 
 # Create sidebar navigation
-for i, tool in enumerate(TOOLS):
+page_counter = 1
+for tool in TOOLS:
     if tool["external_url"]:
         st.sidebar.link_button(f"{tool['icon']} {tool['name']}", tool["external_url"])
     else:
-        st.sidebar.page_link(f"pages/{i+1:02d}_{tool['key']}.py", label=f"{tool['icon']} {tool['name']}")
+        st.sidebar.page_link(f"pages/{page_counter:02d}_{tool['key']}.py", label=f"{tool['icon']} {tool['name']}")
+        page_counter += 1
 
 # Main content
 st.title("🏗️ PWD Tools - Dashboard")
@@ -110,6 +112,7 @@ st.divider()
 st.subheader("Tools")
 
 cols = st.columns(5)
+page_counter = 1
 for i, tool in enumerate(TOOLS):
         with cols[i % 5]:
                 st.markdown(f"{tool['icon']} **{tool['name']}**")
@@ -118,7 +121,8 @@ for i, tool in enumerate(TOOLS):
                 if tool["external_url"]:
                         st.link_button("Open Web Tool", tool["external_url"])
                 else:
-                        st.page_link(f"pages/{i+1:02d}_{tool['key']}.py", label="Open Tool", icon="▶️")
+                        st.page_link(f"pages/{page_counter:02d}_{tool['key']}.py", label="Open Tool", icon="▶️")
+                        page_counter += 1
                 # Screenshots if present
                 tool_dir = base_dir / tool["key"]
                 images = sorted(tool_dir.glob("*.png")) if tool_dir.exists() else []
