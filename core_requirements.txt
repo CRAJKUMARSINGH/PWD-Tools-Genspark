@@ -1,2 +1,0 @@
-# Core requirements for PWD Tools Dashboard
-tkinter  # Usually included with Python
