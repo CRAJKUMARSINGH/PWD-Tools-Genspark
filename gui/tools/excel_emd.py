@@ -57,14 +57,15 @@ class ExcelEMDTool:
     def create_interface(self):
         """Create the tool interface"""
         # Header
-        header_frame = ctk.CTkFrame(self.window, height=60)
+        header_frame = ctk.CTkFrame(self.window, height=60, fg_color="#c71585")  # Magenta
         header_frame.pack(fill="x", padx=10, pady=5)
         header_frame.pack_propagate(False)
         
         title_label = ctk.CTkLabel(
             header_frame,
             text="📊 Excel se EMD - Hand Receipt Generator",
-            font=ctk.CTkFont(size=20, weight="bold")
+            font=ctk.CTkFont(size=20, weight="bold"),
+            text_color="white"
         )
         title_label.pack(pady=15)
         
@@ -90,12 +91,12 @@ class ExcelEMDTool:
         upload_frame.pack(fill="x", padx=10, pady=5)
         
         # Section title
-        title_label = ctk.CTkLabel(
+        upload_title = ctk.CTkLabel(
             upload_frame,
             text="📁 Step 1: Upload Excel File",
             font=ctk.CTkFont(size=16, weight="bold")
         )
-        title_label.pack(pady=(10, 5))
+        upload_title.pack(pady=(10, 5))
         
         # File selection
         file_frame = ctk.CTkFrame(upload_frame)
@@ -114,10 +115,12 @@ class ExcelEMDTool:
             file_frame,
             text="Browse",
             command=self.browse_file,
-            width=100
+            width=100,
+            fg_color="#c71585",        # Magenta
+            hover_color="#9b0e66"      # Darker magenta
         )
         browse_btn.pack(side="right", padx=(5, 10), pady=10)
-        
+
         # Instructions
         instructions_label = ctk.CTkLabel(
             upload_frame,
@@ -179,7 +182,9 @@ class ExcelEMDTool:
             text="Generate All Receipts",
             command=self.process_all_receipts,
             state="disabled",
-            width=200
+            width=200,
+            fg_color="#c71585",        # Magenta
+            hover_color="#9b0e66"      # Darker magenta
         )
         self.process_btn.pack(side="left", padx=5)
         
@@ -188,7 +193,9 @@ class ExcelEMDTool:
             text="Preview Single Receipt",
             command=self.preview_single_receipt,
             state="disabled",
-            width=200
+            width=200,
+            fg_color="#ff69b4",        # Hot pink
+            hover_color="#ff1493"      # Deep pink
         )
         self.preview_btn.pack(side="left", padx=5)
     
@@ -222,7 +229,9 @@ class ExcelEMDTool:
             self.export_frame,
             text="Open Export Folder",
             command=self.open_export_folder,
-            width=150
+            width=150,
+            fg_color="#ff00ff",        # Bright magenta
+            hover_color="#cc00cc"      # Darker bright magenta
         )
         self.open_folder_btn.pack(side="left", padx=5)
         
@@ -230,7 +239,9 @@ class ExcelEMDTool:
             self.export_frame,
             text="Save to Database",
             command=self.save_to_database,
-            width=150
+            width=150,
+            fg_color="#da70d6",        # Orchid
+            hover_color="#ba55d3"      # Medium orchid
         )
         self.save_to_db_btn.pack(side="left", padx=5)
     
@@ -394,98 +405,231 @@ class ExcelEMDTool:
             messagebox.showerror("Processing Error", f"Failed to process receipts:\n{str(e)}")
     
     def generate_receipt_html(self, payee, amount, work_description):
-        """Generate HTML content for receipt"""
-        dept_info = self.settings.get_department_info()
-        
-        html_content = f"""
-<!DOCTYPE html>
+        """Generate HTML content for receipt using the standardized template"""
+        html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=210mm, height=297mm">
     <title>Hand Receipt (RPWA 28)</title>
     <style>
-        body {{ font-family: Arial, sans-serif; margin: 0; padding: 20px; }}
-        .container {{ max-width: 800px; margin: 0 auto; border: 2px solid #000; padding: 20px; }}
-        .header {{ text-align: center; margin-bottom: 20px; }}
-        .title {{ font-size: 24px; font-weight: bold; margin-bottom: 10px; }}
-        .subtitle {{ font-size: 18px; margin-bottom: 20px; }}
-        .content {{ margin-bottom: 20px; }}
-        .field {{ margin-bottom: 15px; }}
-        .field-label {{ font-weight: bold; display: inline-block; width: 150px; }}
-        .field-value {{ display: inline-block; border-bottom: 1px solid #000; min-width: 300px; }}
-        .amount-section {{ background-color: #f0f0f0; padding: 15px; border: 1px solid #000; margin: 20px 0; }}
-        .signature-section {{ margin-top: 40px; }}
-        .signature-box {{ border: 1px solid #000; height: 60px; width: 200px; display: inline-block; margin-right: 50px; }}
-        .footer {{ text-align: center; margin-top: 30px; font-size: 12px; }}
+        body {{
+            font-family: sans-serif;
+            margin: 0;
+            width: 210mm;
+            height: 297mm;
+            overflow: hidden;
+        }}
+
+        .container {{
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            padding: 15px;
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: avoid;
+            page-break-inside: avoid;
+        }}
+
+        .header {{
+            text-align: center;
+            margin-bottom: 2px;
+        }}
+
+        .header h2 {{
+            margin: 2px 0;
+            font-size: 16px;
+        }}
+
+        .header p {{
+            margin: 1px 0;
+            font-size: 12px;
+        }}
+
+        .details {{
+            margin-bottom: 1px;
+            font-size: 12px;
+        }}
+
+        .details p {{
+            margin: 2px 0;
+        }}
+
+        .amount-words {{
+            font-style: italic;
+        }}
+
+        .signature-area {{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12px;
+        }}
+
+        .signature-area td, .signature-area th {{
+            border: 1px solid #ccc;
+            padding: 3px;
+            text-align: left;
+        }}
+
+        .offices {{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 11px;
+        }}
+
+        .offices td, .offices th {{
+            border: 1px solid black;
+            padding: 3px;
+            text-align: left;
+            word-wrap: break-word;
+        }}
+
+        .input-field {{
+            border-bottom: 1px dotted #ccc;
+            padding: 2px;
+            width: calc(100% - 4px);
+            display: inline-block;
+            font-size: 12px;
+        }}
+
+        @media print {{
+            .container {{
+                border: none;
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 10mm;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }}
+
+            .input-field {{
+                border: none;
+            }}
+
+            body {{
+                margin: 0;
+                width: 210mm;
+                height: 297mm;
+                overflow: hidden;
+            }}
+
+            @page {{
+                size: A4 portrait;
+                margin: 0;
+                page-break-after: avoid;
+            }}
+        }}
+
+        .seal-container {{
+            position: absolute;
+            left: 10mm;
+            bottom: 10mm;
+            width: 40mm;
+            height: 25mm;
+            z-index: 10;
+        }}
+
+        .seal {{
+            max-width: 100%;
+            max-height: 100%;
+            text-align: center;
+            line-height: 40mm;
+            color: blue;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 10px;
+        }}
+
+        .bottom-left-box {{
+            position: absolute;
+            bottom: 40mm;
+            left: 40mm;
+            border: 2px solid black;
+            padding: 8px;
+            width: 300px;
+            text-align: left;
+            height: auto;
+            font-size: 12px;
+        }}
+
+        .bottom-left-box p {{
+            margin: 2px 0;
+        }}
+
+        .bottom-left-box .blue-text {{
+            color: blue;
+        }}
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
-            <div class="title">{dept_info.get('name', 'Public Works Department')}</div>
-            <div class="subtitle">{dept_info.get('office', 'PWD Office, Udaipur')}</div>
-            <div class="subtitle">HAND RECEIPT (RPWA 28)</div>
+            <h2>Payable to: - {payee} ( Electric Contractor)</h2>
+            <h2>HAND RECEIPT (RPWA 28)</h2>
+            <p>(Referred to in PWF&A Rules 418,424,436 & 438)</p>
+            <p>Division - PWD Electric Division, Udaipur</p>
         </div>
-        
-        <div class="content">
-            <div class="field">
-                <span class="field-label">Receipt No.:</span>
-                <span class="field-value">EMD-{datetime.now().strftime('%Y%m%d')}-{abs(hash(payee)) % 10000:04d}</span>
-            </div>
-            
-            <div class="field">
-                <span class="field-label">Date:</span>
-                <span class="field-value">{datetime.now().strftime('%d/%m/%Y')}</span>
-            </div>
-            
-            <div class="field">
-                <span class="field-label">Received from:</span>
-                <span class="field-value">{payee}</span>
-            </div>
-            
-            <div class="field">
-                <span class="field-label">Work Description:</span>
-                <span class="field-value">{work_description}</span>
-            </div>
-            
-            <div class="amount-section">
-                <div class="field">
-                    <span class="field-label">Amount (₹):</span>
-                    <span class="field-value" style="font-size: 18px; font-weight: bold;">₹ {amount:,.2f}</span>
-                </div>
-                
-                <div class="field">
-                    <span class="field-label">Amount in Words:</span>
-                    <span class="field-value">{self.amount_to_words(amount)} Rupees Only</span>
-                </div>
-            </div>
-            
-            <div class="field">
-                <span class="field-label">Purpose:</span>
-                <span class="field-value">Earnest Money Deposit (EMD)</span>
-            </div>
-            
-            <div class="signature-section">
-                <div style="float: left;">
-                    <div>Received by:</div>
-                    <div class="signature-box"></div>
-                    <div>Signature & Stamp</div>
-                </div>
-                
-                <div style="float: right;">
-                    <div>Submitted by:</div>
-                    <div class="signature-box"></div>
-                    <div>Contractor Signature</div>
-                </div>
-                
-                <div style="clear: both;"></div>
+        <div class="details">
+            <p>(1)Cash Book Voucher No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p>(2)Cheque No. and Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p>(3) Pay for ECS Rs.{amount}/- (Rupees <span id="amount-words" class="amount-words">{self.amount_to_words(float(amount))} only</span>)</p>
+            <p>(4) Paid by me</p>
+            <p>(5) Received from The Executive Engineer PWD Electric Division, Udaipur the sum of Rs. {amount}/- (Rupees <span id="amount-words" class="amount-words">{self.amount_to_words(float(amount))} only</span>)</p>
+            <p> Name of work for which payment is made: <span id="work-name" class="input-field">{work_description}</span></p>
+            <p> Chargeable to Head:- 8443 [EMD-Refund] </p>   
+            <table class="signature-area">
+                <tr>
+                    <td>Witness</td>
+                    <td>Stamp</td>
+                    <td>Signature of payee</td>
+                </tr>
+                <tr>
+                    <td>Cash Book No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Page No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <table class="offices">
+                <tr>
+                    <td>For use in the Divisional Office</td>
+                    <td>For use in the Accountant General's office</td>
+                </tr>
+                <tr>
+                    <td>Checked</td>
+                    <td>Audited/Reviewed</td>
+                </tr>
+                <tr>
+                    <td>Accounts Clerk</td>
+                    <td>
+                        DA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Auditor &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Supdt. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G.O.
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="seal-container">
+            <div class="seal">
+                <p></p>
+                <p></p>
+                <p></p>
             </div>
         </div>
-        
-        <div class="footer">
-            <p>This is a computer-generated receipt | PWD Tools Desktop v1.0.0</p>
-            <p>Generated on: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}</p>
+        <div class="bottom-left-box">
+            <p class="blue-text"> Passed for Rs. {amount}</p>
+            <p class="blue-text"> In Words Rupees: {self.amount_to_words(float(amount))} Only</p>
+            <p class="blue-text"> Chargeable to Head:- 8443 [EMD-Refund]</p>
+            <div class="seal">
+                <p>Ar.</p>
+                <p>D.A.</p>
+                <p>E.E.</p>
+            </div>
         </div>
     </div>
 </body>
@@ -494,50 +638,75 @@ class ExcelEMDTool:
         return html_content
     
     def amount_to_words(self, amount):
-        """Convert amount to words (simplified version)"""
-        # This is a simplified implementation
-        # In production, you'd use a proper number-to-words library
-        
-        ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
-        teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']
-        tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
-        
-        def convert_hundreds(n):
-            result = ''
-            if n >= 100:
-                result += ones[n // 100] + ' Hundred '
-                n %= 100
-            if n >= 20:
-                result += tens[n // 10] + ' '
-                n %= 10
-            elif n >= 10:
-                result += teens[n - 10] + ' '
-                n = 0
-            if n > 0:
-                result += ones[n] + ' '
-            return result.strip()
+        """Convert amount to words in Indian numbering system"""
+        # Convert to integer to handle the amount properly
+        amount = int(amount)
         
         if amount == 0:
-            return 'Zero'
-        
-        # Handle crores, lakhs, thousands, hundreds
-        crores = int(amount // 10000000)
-        lakhs = int((amount % 10000000) // 100000)
-        thousands = int((amount % 100000) // 1000)
-        hundreds = int(amount % 1000)
-        
-        result = ''
-        if crores > 0:
-            result += convert_hundreds(crores) + ' Crore '
-        if lakhs > 0:
-            result += convert_hundreds(lakhs) + ' Lakh '
-        if thousands > 0:
-            result += convert_hundreds(thousands) + ' Thousand '
-        if hundreds > 0:
-            result += convert_hundreds(hundreds)
-        
-        return result.strip()
-    
+            return "Zero"
+
+        ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"]
+        tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+        teens = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+        crore = " Crore "
+        lakh = " Lakh "
+        thousand = " Thousand "
+        hundred = " Hundred "
+        and_ = " and "
+
+        words = ""
+
+        # Crores
+        if amount // 10000000:
+            crores = amount // 10000000
+            if crores > 9:
+                words += self.amount_to_words(crores) + crore
+            else:
+                words += ones[crores] + crore
+            amount %= 10000000
+
+        # Lakhs
+        if amount // 100000:
+            lakhs = amount // 100000
+            if lakhs > 9:
+                words += self.amount_to_words(lakhs) + lakh
+            else:
+                words += ones[lakhs] + lakh
+            amount %= 100000
+
+        # Thousands
+        if amount // 1000:
+            thousands = amount // 1000
+            if thousands > 9:
+                words += self.amount_to_words(thousands) + thousand
+            else:
+                words += ones[thousands] + thousand
+            amount %= 1000
+
+        # Hundreds
+        if amount // 100:
+            hundreds = amount // 100
+            if hundreds > 9:
+                words += self.amount_to_words(hundreds) + hundred
+            else:
+                words += ones[hundreds] + hundred
+            amount %= 100
+
+        # Tens and ones
+        if amount > 0:
+            if words:
+                words += and_
+            if amount < 10:
+                words += ones[amount]
+            elif amount < 20:
+                words += teens[amount - 10]
+            else:
+                words += tens[amount // 10]
+                if amount % 10:
+                    words += " " + ones[amount % 10]
+
+        return words.strip()
+
     def sanitize_filename(self, name):
         """Sanitize filename for safe file creation"""
         import re

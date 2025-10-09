@@ -9,20 +9,17 @@
         body {
             font-family: sans-serif;
             margin: 0;
-            width: 210mm;
-            height: 297mm;
-            overflow: hidden;
-            position: relative;
         }
 
         .container {
             width: 210mm;
             height: 297mm;
-            margin: 0;
+            margin: 0 auto;
             border: 2px solid #ccc;
             padding: 20px;
             box-sizing: border-box;
             position: relative;
+            page-break-after: avoid;
         }
 
         .header {
@@ -32,8 +29,6 @@
 
         .details {
             margin-bottom: 1px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
         .amount-words {
@@ -44,22 +39,18 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: fixed;
         }
 
         .signature-area td, .signature-area th {
             border: 1px solid #ccc;
             padding: 5px;
             text-align: left;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
         .offices {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: fixed;
         }
 
         .offices td, .offices th {
@@ -67,7 +58,6 @@
             padding: 5px;
             text-align: left;
             word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
         .input-field {
@@ -75,30 +65,15 @@
             padding: 3px;
             width: calc(100% - 10px);
             display: inline-block;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
         @media print {
-            html, body {
-                width: 210mm;
-                height: 297mm;
-                overflow: hidden;
-                margin: 0;
-                padding: 0;
-            }
-            
             .container {
+                border: none;
                 width: 210mm;
                 height: 297mm;
-                border: none;
                 margin: 0;
-                padding: 20px;
-                position: relative;
-                page-break-inside: avoid;
-                page-break-after: avoid;
-                page-break-before: avoid;
-                box-sizing: border-box;
+                padding: 10mm;
             }
 
             .input-field {
@@ -107,45 +82,11 @@
 
             body {
                 margin: 0;
-                overflow: hidden;
-                -webkit-print-color-adjust: exact;
-                color-adjust: exact;
             }
-            
-            #prompt-container {
-                display: none !important;
-            }
-            
-            * {
-                -webkit-print-color-adjust: exact !important;
-                color-adjust: exact !important;
-                page-break-inside: avoid;
-            }
-            
-            /* Strict single page controls */
+
             @page {
-                size: A4;
+                size: A4 portrait;
                 margin: 0;
-            }
-            
-            /* Prevent any content from spilling over */
-            .header, .details, .signature-area, .offices, .bottom-left-box {
-                page-break-inside: avoid;
-                page-break-after: avoid;
-                page-break-before: avoid;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-            }
-            
-            /* Ensure tables don't overflow */
-            table {
-                table-layout: fixed;
-                width: 100%;
-            }
-            
-            td, th {
-                word-wrap: break-word;
-                overflow-wrap: break-word;
             }
         }
 
@@ -178,14 +119,10 @@
             width: 300px;
             text-align: left;
             height: auto;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
         .bottom-left-box p {
             margin: 3px 0;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
         .bottom-left-box .blue-text {
@@ -197,26 +134,66 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
+            background-color: #F5F6F5;
             padding: 20px;
-            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 400px;
+            font-family: Arial, sans-serif;
         }
 
-        #prompt-container input, #prompt-container button {
-            margin-bottom: 10px;
+        #prompt-container label {
+            grid-column: span 1;
+            font-weight: bold;
+            color: #333;
+            align-self: center;
+        }
+
+        #prompt-container input {
+            grid-column: span 2;
+            padding: 8px;
+            border: 1px solid #D1D1D1;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        #prompt-container input:focus {
+            border-color: #C71585;
+            outline: none;
+        }
+
+        #prompt-container button {
+            grid-column: span 3;
+            background-color: #C71585;
+            color: #FFFFFF;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #prompt-container button:hover {
+            background-color: #9B0E66;
         }
     </style>
 </head>
 
 <body>
     <div id="prompt-container">
-        <label for="payee">Payee Name:</label><br>
-        <input type="text" id="payee"><br>
-        <label for="amount">Amount:</label><br>
-        <input type="number" id="amount"><br>
-        <label for="work">Name of Work:</label><br>
-        <input type="text" id="work"><br>
+        <label for="payee">Payee Name:</label>
+        <input type="text" id="payee">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount">
+        <label for="work">Name of Work:</label>
+        <input type="text" id="work">
         <button id="generate-button">Generate Receipt</button>
     </div>
 
@@ -311,72 +288,44 @@
                         <tr>
                             <td>Accounts Clerk</td>
                             <td>
-                                DA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Auditor &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Supdt. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  G.O.
+                                DA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Auditor &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Supdt. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G.O.
                             </td>
                         </tr>
                     </table>
-                    <div class="seal-container">
-                        <div class="seal">
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                        </div>
+                </div>
+                <div class="seal-container">
+                    <div class="seal">
+                        <p></p>
+                        <p></p>
+                        <p></p>
                     </div>
-                    <div class="bottom-left-box">
-                        <p class="blue-text"> Passed for Rs. ${amount}</p>
-                        <p class="blue-text"> In Words Rupees: ${amountInWords} Only</p>
-                        <p class="blue-text"> Chargeable to Head:- 8443 [EMD-Refund]</p>
-                        <div class="seal">
-                            <p>Ar.</p>
-                            <p>D.A.</p>
-                            <p>E.E.</p>
-                        </div>
+                </div>
+                <div class="bottom-left-box">
+                    <p class="blue-text"> Passed for Rs. ${amount}</p>
+                    <p class="blue-text"> In Words Rupees: ${amountInWords} Only</p>
+                    <p class="blue-text"> Chargeable to Head:- 8443 [EMD-Refund]</p>
+                    <div class="seal">
+                        <p>Ar.</p>
+                        <p>D.A.</p>
+                        <p>E.E.</p>
                     </div>
                 </div>
             `;
         }
 
-        // Function to get URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(window.location.href);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-
-        // Check if URL parameters exist and auto-generate receipt
-        document.addEventListener('DOMContentLoaded', function() {
-            const payee = getUrlParameter('payee');
-            const amount = getUrlParameter('amount');
-            const work = getUrlParameter('work');
-            
-            if (payee && amount && work) {
-                // Auto-generate receipt from URL parameters
-                const receiptHTML = generateReceiptHTML(payee, amount, work);
+        document.getElementById('generate-button').addEventListener('click', function() {
+            const enteredPayee = document.getElementById('payee').value;
+            const enteredAmount = parseFloat(document.getElementById('amount').value);
+            const enteredWork = document.getElementById('work').value;
+            if (enteredPayee && !isNaN(enteredAmount) && enteredWork) {
+                const receiptHTML = generateReceiptHTML(enteredPayee, enteredAmount, enteredWork);
                 document.getElementById('receipt-content').innerHTML = receiptHTML;
                 document.getElementById('prompt-container').style.display = 'none';
-                
-                // Print automatically after a short delay
                 setTimeout(function() {
                     window.print();
-                }, 1000);
+                }, 100);
             } else {
-                // Show prompt if no parameters
-                document.getElementById('generate-button').addEventListener('click', function() {
-                    const enteredPayee = document.getElementById('payee').value;
-                    const enteredAmount = parseFloat(document.getElementById('amount').value);
-                    const enteredWork = document.getElementById('work').value;
-                    if (enteredPayee && !isNaN(enteredAmount) && enteredWork) {
-                        const receiptHTML = generateReceiptHTML(enteredPayee, enteredAmount, enteredWork);
-                        document.getElementById('receipt-content').innerHTML = receiptHTML;
-                        document.getElementById('prompt-container').style.display = 'none';
-                        setTimeout(function() {
-                            window.print();
-                        }, 100);
-                    } else {
-                        alert("Please provide all required information. Amount must be a number.");
-                    }
-                });
+                alert("Please provide all required information. Amount must be a number.");
             }
         });
     </script>
