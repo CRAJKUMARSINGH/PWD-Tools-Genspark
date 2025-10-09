@@ -1,51 +1,66 @@
-# PWD Tools Hub - Streamlit Version
+# 🏗️ PWD Tools Web - Infrastructure Management Suite
 
-A web-based suite of tools for the Public Works Department (PWD) of Rajasthan, India.
+A beautiful, magenta-themed web application for the Public Works Department (PWD) of Rajasthan, India.
 
-## Overview
+## 🌟 Overview
 
-This is the web version of the PWD Tools application, designed to provide essential tools for PWD operations directly in the browser. The application includes:
+Welcome to **PWD Tools Web** - a comprehensive suite of tools designed specifically for Public Works Department operations. This web application provides all the essential tools you need for financial calculations, document generation, and project management in a streamlined, browser-based interface.
 
-- Excel se EMD: Generate hand receipts from Excel files
-- Bill Note Sheet: Create running and final bills
-- EMD Refund: Calculate Earnest Money Deposit refunds
-- Deductions Table: Calculate financial deductions
-- Delay Calculator: Calculate project delays and penalties
-- Financial Progress: Track financial progress and liquidity damages
-- Security Refund: Process security deposit refunds
-- Stamp Duty: Calculate stamp duty with PWD rates
-- Bill & Deviation: Infrastructure billing with deviation tracking
-- Tender Processing: Streamline tender processing workflows
+### Available Tools:
 
-## Deployment
+- 📊 **Excel se EMD**: Generate hand receipts from Excel files
+- 📝 **Bill Note Sheet**: Create standardized bill note sheets
+- 💰 **EMD Refund**: Calculate EMD refunds with automatic penalty calculations
+- 🧮 **Deductions Table**: Calculate all standard deductions for bill amounts
+- ⏰ **Delay Calculator**: Calculate project delays and associated penalties
+- 🔒 **Security Refund**: Process security deposit refunds efficiently
+- 📈 **Financial Progress**: Track financial progress and liquidity damages
+- taxp **Stamp Duty**: Calculate stamp duty amounts for various documents
 
-This application is designed for deployment on Streamlit Cloud:
+## 🚀 Beautiful Streamlit Deployment
 
-1. Fork this repository
-2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
-3. Create a new app
-4. Select your forked repository
-5. Set the main file path to `app.py`
-6. Deploy the app
+This application is beautifully deployed on Streamlit Cloud with a magenta-themed interface:
 
-## Requirements
+1. Visit our live application: [PWD Tools Web - Infrastructure Management Suite](https://pwd-tools-web.streamlit.app)
+2. Experience all PWD tools in a responsive, modern interface
+3. No installation required - works directly in your browser
+4. Mobile-friendly design for on-the-go access
 
-- Python 3.9+
-- All dependencies listed in `requirements.txt`
+## 🎨 Beautiful Magenta Theme
 
-## Local Development
+Our application features a beautiful magenta color scheme that enhances usability while maintaining a professional appearance:
+
+- Primary Color: `#c71585` (Medium Violet Red)
+- Secondary Accents: `#ff00ff` and `#ff69b4`
+- Clean, modern interface with smooth animations
+- Responsive design that works on all devices
+
+## ▶️ Local Development
 
 To run locally:
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 
-## Desktop Version
+Access the application at `http://localhost:8501`
+
+## 💻 Desktop Version
 
 For the full offline experience with all tools, download the desktop version from the releases page.
 
-## Credits
+The desktop version offers:
+- Offline functionality
+- Enhanced performance
+- Additional features not available in the web version
+
+## 👨‍💼 Credits
 
 Developed under the initiative of Mrs. Premlata Jain, Additional Administrative Officer, PWD Udaipur.
+
+Special thanks to RAJKUMAR SINGH CHAUHAN for development and maintenance.
+
+---
+
+<p align="center">🏛️ <strong>Built with ❤️ for the Public Works Department</strong> 🏛️</p>
