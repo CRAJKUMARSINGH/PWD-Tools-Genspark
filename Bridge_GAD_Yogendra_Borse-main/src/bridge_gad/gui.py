@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog, Menu
 import requests
 import webbrowser
+import os
 from bridge_gad.geometry import summarize
 from bridge_gad.io_utils import save_results_to_excel
 from bridge_gad.config import DEFAULT_E, DEFAULT_I
@@ -18,6 +19,15 @@ except ImportError:
     Image = None
     ImageTk = None
     print("PIL not available - using text-based splash screen")
+
+# Try to import tkPDFViewer for embedded PDF viewing (optional)
+try:
+    from tkPDFViewer import tkPDFViewer as pdf
+    PDF_VIEWER_AVAILABLE = True
+except ImportError:
+    PDF_VIEWER_AVAILABLE = False
+    pdf = None
+    print("tkPDFViewer not available - using external PDF viewer")
 
 LATEST_RELEASE_URL = "https://api.github.com/repos/CRAJKUMARSINGH/Bridge_GAD_Yogendra_Borse/releases/latest"
 
@@ -181,10 +191,68 @@ class BridgeGADApp(tk.Tk):
         
         # Help menu
         help_menu = Menu(menubar, tearoff=0)
+        help_menu.add_command(label="User Manual", command=self.open_user_manual)
+        help_menu.add_separator()
         help_menu.add_command(label="About", command=self.show_about)
         menubar.add_cascade(label="Help", menu=help_menu)
         
         self.config(menu=menubar)
+
+    def open_user_manual(self):
+        """Open the user manual PDF in the default viewer or show embedded viewer."""
+        # First try to find the PDF manual
+        manual_paths = [
+            os.path.join(os.path.dirname(__file__), "..", "..", "docs", "Bridge_GAD_User_Manual.pdf"),
+            os.path.join(os.path.dirname(__file__), "..", "..", "docs", "Bridge_GAD_User_Manual.md"),
+            os.path.join("docs", "Bridge_GAD_User_Manual.pdf"),
+            os.path.join("docs", "Bridge_GAD_User_Manual.md")
+        ]
+        
+        manual_path = None
+        for path in manual_paths:
+            abs_path = os.path.abspath(path)
+            if os.path.exists(abs_path):
+                manual_path = abs_path
+                break
+        
+        if manual_path:
+            # If it's a PDF and we have the embedded viewer, use it
+            if manual_path.endswith('.pdf') and PDF_VIEWER_AVAILABLE and pdf:
+                self.show_embedded_manual(manual_path)
+            else:
+                # Otherwise open with default application
+                try:
+                    webbrowser.open_new(manual_path)
+                except Exception as e:
+                    messagebox.showerror("Error", f"Could not open manual: {e}")
+        else:
+            messagebox.showerror("Manual Not Found", 
+                               "Bridge_GAD_User_Manual.pdf or .md not found.\n"
+                               "Please regenerate it using build_manual.bat.")
+
+    def show_embedded_manual(self, pdf_path):
+        """Show the manual in an embedded PDF viewer."""
+        try:
+            win = tk.Toplevel(self)
+            win.title("Bridge_GAD User Manual")
+            win.geometry("900x600")
+            
+            # Create a frame for the PDF viewer
+            pdf_frame = tk.Frame(win)
+            pdf_frame.pack(fill="both", expand=True, padx=10, pady=10)
+            
+            # Show the PDF
+            if pdf and PDF_VIEWER_AVAILABLE:
+                v1 = pdf.ShowPdf()
+                v2 = v1.pdf_view(pdf_frame, pdf_location=pdf_path, width=100, height=80)
+                v2.pack(fill="both", expand=True)
+            else:
+                # Fallback to external viewer
+                webbrowser.open_new(pdf_path)
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Could not display PDF: {e}\nOpening in external viewer instead.")
+            webbrowser.open_new(pdf_path)
 
     def show_about(self):
         """Show the About dialog."""

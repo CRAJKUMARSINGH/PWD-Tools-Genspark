@@ -30,6 +30,12 @@ typing-extensions>=4.5.0
 # Image processing for splash screen
 Pillow>=10.0.0
 
+# Documentation generation
+pypandoc>=1.11
+
+# PDF viewer for in-app manual
+tkPDFViewer>=0.1
+
 # Development dependencies (optional)
 pytest>=7.0.0
 pytest-cov>=4.0.0
