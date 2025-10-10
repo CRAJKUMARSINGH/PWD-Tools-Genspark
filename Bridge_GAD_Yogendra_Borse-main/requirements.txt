@@ -1,0 +1,38 @@
+# Enhanced Bridge GAD Generator Requirements
+# Core dependencies for bridge drawing generation
+
+# DXF file handling
+ezdxf>=1.4.0
+
+# PDF generation
+reportlab>=4.0.0
+
+# GUI framework
+pygame>=2.5.0
+
+# Data processing
+numpy>=1.25
+pandas>=2.0
+matplotlib>=3.7
+openpyxl>=3.1
+scipy>=1.11
+requests>=2.31.0
+
+# Excel file handling
+xlrd>=2.0.0
+
+# YAML configuration
+PyYAML>=6.0
+
+# Type hints support
+typing-extensions>=4.5.0
+
+# Image processing for splash screen
+Pillow>=10.0.0
+
+# Development dependencies (optional)
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
