@@ -7,10 +7,32 @@ from typing import Optional
 import typer
 import pandas as pd
 
+# Import the logger module for global exception handling
+from . import logger
+
 from .config import Settings
 from .core import compute_load
 from .drawing import SlabBridgeGAD
 from .bridge_generator import generate_bridge_gad
+
+# Set up global exception handler
+def handle_exception(exc_type, exc_value, exc_tb):
+    """Global exception handler that logs errors and shows user-friendly message."""
+    # Log the error using our logger module
+    log_path = logger.log_error(exc_type, exc_value, exc_tb)
+    try:
+        # Try to show a user-friendly error message
+        from tkinter import messagebox
+        messagebox.showerror(
+            "Bridge_GAD Error",
+            f"An unexpected error occurred.\nA log has been saved at:\n{log_path}"
+        )
+    except Exception:
+        # If we can't show a GUI message, print to console
+        print(f"An unexpected error occurred. A log has been saved at: {log_path}")
+
+# Set the global exception hook
+sys.excepthook = handle_exception
 
 app = typer.Typer()
 

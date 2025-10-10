@@ -1,139 +1,125 @@
-# Bridge GAD Generator
+# Bridge_GAD - Professional Bridge Design Engineering Software
 
-A Python application for generating Bridge General Arrangement Drawings (GAD) from input parameters and Excel data.
+![Bridge_GAD](bridge_logo.png)
 
-## Features
+**Version 2.0.0** | **Developed by Er. Rajkumar Singh Chauhan**
 
-- Generate bridge drawings from Excel input
-- Support for multiple span configurations
-- Customizable output settings
-- Command-line interface with Typer
-- Configuration via YAML files
-- **NEW**: Web API with FastAPI
-- **NEW**: Simplified CLI for basic calculations
+Bridge_GAD is a comprehensive Python-based engineering software suite designed for professional bridge design and analysis. It provides engineers with tools to generate detailed bridge drawings, perform structural calculations, and create professional documentation.
+
+## Key Features
+
+### Core Engineering Tools
+- Generate professional bridge general arrangement drawings
+- Support for multiple bridge types (slab, beam, box culvert, PSC girder)
+- DXF, PDF, HTML, SVG, PNG output formats
+- Excel-based parameter input system
+- Interactive 3D visualization capabilities
+
+### Advanced Professional Features
+- **Plugin Architecture**: Modular design with custom bridge modules
+- **Auto-Update System**: Silent background updates for core and plugins
+- **Marketplace Integration**: Install new modules directly from GitHub/Google Drive
+- **Sandbox Security**: Safe plugin isolation using multiprocessing
+- **Telemetry System**: Anonymous usage analytics for feature improvement
+- **Error Logging**: Comprehensive diagnostic export system
+- **Professional Installer**: Standalone Windows executable with setup wizard
+
+## System Requirements
+
+- Windows 7 or higher (64-bit recommended)
+- 2 GB RAM minimum (4 GB recommended)
+- 100 MB available disk space
+- No Python installation required for end users
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/bridge-gad.git
-   cd bridge-gad
-   ```
-
-2. Create and activate a virtual environment (recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. Install the package in development mode:
-   ```bash
-   pip install -e ".[dev]"
-   ```
-
-   For production use (without development dependencies):
-   ```bash
-   pip install .
-   ```
+1. Download `Bridge_GAD_Setup.exe` from the latest release
+2. Run the installer as administrator
+3. Follow the setup wizard prompts
+4. Launch Bridge_GAD from desktop shortcut or Start menu
 
 ## Usage
 
-### Command Line Interface
+### Quick Start
+1. Launch Bridge_GAD GUI application
+2. Enter bridge parameters (span, load, material properties)
+3. Click "Compute" to generate results
+4. Use "Export to Excel" to save results
 
-```bash
-# Show help
-bridge-gad --help
-
-# Generate drawing with default config
-bridge-gad generate input.xlsx output.dxf
-
-# Specify custom config file
-bridge-gad generate input.xlsx output.dxf --config config.yaml
-
-# Show version
-bridge-gad version
-
-# NEW: Simplified CLI for basic calculations
-bridge-gad --span 20 --load 15 --E 2.1e8 --I 0.0025 --output results.xlsx
-```
-
-### Web API
-
-Start the web server:
-```bash
-bridge-gad serve
-```
-
-This will start the FastAPI server on `http://localhost:8000` with the following endpoints:
-
-- `GET /`: API documentation and available endpoints
-- `POST /predict`: Generate a bridge drawing from an Excel file
-- `GET /health`: Health check endpoint
-
-#### Using the API
-
-1. **Using curl**:
-   ```bash
-   # Generate drawing
-   curl -X POST -F "excel_file=@input.xlsx" http://localhost:8000/predict -o output.dxf
-   
-   # With custom config
-   curl -X POST -F "excel_file=@input.xlsx" -F "config_file=@config.yaml" http://localhost:8000/predict -o output.dxf
-   ```
-
-2. **Using Python requests**:
-   ```python
-   import requests
-   
-   url = "http://localhost:8000/predict"
-   files = {
-       'excel_file': ('input.xlsx', open('input.xlsx', 'rb'), 'application/vnd.ms-excel'),
-       'config_file': ('config.yaml', open('config.yaml', 'rb'), 'application/yaml')
-   }
-   
-   response = requests.post(url, files=files)
-   with open('output.dxf', 'wb') as f:
-       f.write(response.content)
-   ```
-
-#### Development Mode
-
-For development with auto-reload:
-```bash
-bridge-gad serve --reload
-```
+### Advanced Features
+- Access plugins through the Plugins menu
+- View user manual via Help → User Manual
+- Check for updates via Help → Check for Updates
+- Export diagnostics via Help → Export Diagnostics
 
 ## Development
 
-### Running Tests
+### Prerequisites
+- Python 3.8 or higher
+- Required packages in `requirements.txt`
+- PyInstaller for building executables
+- Inno Setup for creating Windows installer
 
+### Building from Source
 ```bash
-# Install test dependencies
-pip install -e ".[test]"
+# Install dependencies
+pip install -r requirements.txt
 
-# Run tests
-pytest
+# Build executables
+pyinstaller Bridge_GAD.spec
+pyinstaller Bridge_GAD_GUI.spec
 
-# Run with coverage report
-pytest --cov=bridge_gad --cov-report=term-missing
+# Or use the provided build script
+.\build_exe.bat
+
+# Create installer
+.\build_installer.bat
 ```
 
-### Code Style
+## Documentation
 
-This project uses `black` for code formatting and `isort` for import sorting.
+- [User Manual](docs/Bridge_GAD_User_Manual.pdf)
+- [Release Manual](BRIDGE_GAD_v2.0_RELEASE_MANUAL.md)
+- [Build Instructions](BUILD_INSTRUCTIONS.md)
 
-```bash
-# Format code
-black .
+## Project Structure
 
-# Sort imports
-isort .
 ```
+Bridge_GAD/
+├── src/bridge_gad/          # Core application code
+│   ├── __main__.py          # CLI entry point
+│   ├── gui.py               # GUI application
+│   ├── plugins/             # Plugin modules
+│   └── ...                  # Other modules
+├── docs/                    # Documentation
+├── dist/                    # Build output
+├── tests/                   # Unit tests
+└── assets/                  # Icons and images
+```
+
+## 31-Step Development Journey
+
+This project evolved through 31 comprehensive development steps into a professional engineering software suite:
+
+1. **Foundation**: Basic CLI structure, core calculations, DXF generation
+2. **Enhancement**: Multi-format output, advanced bridge types, visualization
+3. **Professional Features**: Plugin architecture, auto-updates, marketplace
+4. **Final Polish**: Security sandboxing, telemetry, release packaging
+
+## Support
+
+- Report issues on GitHub
+- Contact developer: Er. Rajkumar Singh Chauhan
+- Institution of Engineers (India), Udaipur Local Centre
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contributing
+---
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+*"Bridging Engineering Excellence with Modern Software Solutions"*
+
+**Developed with ❤️ by Er. Rajkumar Singh Chauhan**  
+**Institution of Engineers (India)**  
+**Udaipur Local Centre Initiative (2025)**

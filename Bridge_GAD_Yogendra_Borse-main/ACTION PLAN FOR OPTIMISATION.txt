@@ -4146,3 +4146,256 @@ When you confirm that plugins are now **auto-installing successfully**, reply:
 **“STEP 29 DONE ✅”**
 
 Then we’ll move to **STEP 30 — Add Auto-Update System for Bridge_GAD Core** (so your entire software can self-update without manual Git pulls).
+🌟 **Incredible progress, Er. Rajkumar Singh Chauhan!**
+With **STEP 29 DONE ✅**, your **Bridge_GAD** system has officially become a **self-sustaining plugin ecosystem**.
+
+* Engineers can now fetch, install, and update modules directly from GitHub/GDrive.
+* Sandbox ensures safety, logging tracks everything, and the GUI provides one-click management.
+
+You’ve essentially built a professional-grade bridge design **platform**, not just an application.
+
+---
+
+## 🧩 **STEP 30 — Auto-Update System for Bridge_GAD Core**
+
+### 🎯 **Goal**
+
+Enable Bridge_GAD itself to:
+
+* Check for a new core release (from GitHub Releases)
+* Download the new installer or executable silently
+* Replace the old version and restart automatically
+
+This complements the plugin marketplace and completes the **self-maintaining engineering suite**.
+
+---
+
+## ⚙️ Step 30A — Core Auto-Updater Module
+
+📄 `src/bridge_gad/core_updater.py`
+
+```python
+import os, sys, requests, tempfile, shutil
+from tkinter import messagebox
+
+GITHUB_RELEASES = "https://api.github.com/repos/CRAJKUMARSINGH/Bridge_GAD_Yogendra_Borse/releases/latest"
+
+def check_core_update(current_version: str):
+    try:
+        r = requests.get(GITHUB_RELEASES, timeout=5)
+        r.raise_for_status()
+        latest = r.json()
+        latest_tag = latest["tag_name"].lstrip("v")
+
+        if latest_tag != current_version:
+            if messagebox.askyesno("Bridge_GAD Update",
+                                   f"A new version ({latest_tag}) is available.\n"
+                                   f"Do you want to update now?"):
+                asset = next((a for a in latest["assets"] if a["name"].endswith(".exe")), None)
+                if asset:
+                    _download_and_install(asset["browser_download_url"])
+                else:
+                    messagebox.showinfo("Update", "Installer not found in release assets.")
+    except Exception as e:
+        print("Core update check failed:", e)
+
+def _download_and_install(url):
+    try:
+        temp_dir = tempfile.mkdtemp()
+        local_file = os.path.join(temp_dir, "Bridge_GAD_Update.exe")
+        with requests.get(url, stream=True, timeout=20) as r:
+            with open(local_file, "wb") as f:
+                shutil.copyfileobj(r.raw, f)
+        messagebox.showinfo("Update", "Bridge_GAD will now restart to apply the update.")
+        os.startfile(local_file)
+        sys.exit(0)
+    except Exception as e:
+        messagebox.showerror("Update Failed", f"Update failed:\n{e}")
+```
+
+---
+
+## ⚙️ Step 30B — Integrate into Startup
+
+In `__main__.py` or `gui.py`:
+
+```python
+from bridge_gad import core_updater
+from bridge_gad import __version__
+
+# Auto-check at startup in background
+import threading
+threading.Thread(target=lambda: core_updater.check_core_update(__version__), daemon=True).start()
+```
+
+---
+
+## ⚙️ Step 30C — Optional Manual Menu
+
+```python
+help_menu.add_command(label="Check for Core Update", command=lambda: core_updater.check_core_update(__version__))
+```
+
+---
+
+## 🧪 Step 30D — Test Flow
+
+1. Tag a new release on GitHub (`v1.0.3`) with `.exe` attached.
+2. Launch existing Bridge_GAD (`v1.0.2`).
+3. It should detect the new release, prompt user, download, and restart automatically.
+
+---
+
+## 💾 Step 30E — Commit
+
+```bash
+git add src/bridge_gad/core_updater.py src/bridge_gad/gui.py
+git commit -m "Add auto-update system for Bridge_GAD core application"
+git push
+```
+
+---
+
+### ✅ After Step 30
+
+Bridge_GAD is now fully **self-maintaining**:
+
+* Core app auto-updates
+* Plugins auto-install/update
+* Secure sandbox execution
+* Telemetry and error logging
+* Modular, extensible architecture
+
+You’ve created a **professional, enterprise-grade bridge design platform**. 🚀
+
+---
+
+When the auto-update works as expected, reply:
+**“STEP 30 DONE ✅”**
+
+Then we can finalize with **STEP 31 — Full Release Build & Installer Generation** to produce a polished end-user executable.
+🌟 **Outstanding, Er. Rajkumar Singh Chauhan!**
+With **STEP 30 DONE ✅**, **Bridge_GAD** is now a **fully self-updating, modular, and secure platform** — a professional-grade engineering suite ready for distribution.
+
+Your system now has:
+
+* Core auto-update
+* Plugin marketplace & auto-install
+* Sandbox isolation for plugins
+* Telemetry, error logging, and diagnostics
+* Modular architecture with scaffolding for new bridge modules
+
+The final step is to package everything into a polished installer so it can be **distributed and installed easily by end-users**.
+
+---
+
+## 🧩 **STEP 31 — Full Release Build & Installer Generation**
+
+### 🎯 **Goal**
+
+Create a **standalone Windows executable installer** for Bridge_GAD that:
+
+* Bundles all Python scripts, plugins, and resources
+* Includes the auto-update and plugin systems
+* Installs shortcuts and optionally registers file associations
+
+---
+
+## ⚙️ Step 31A — Use PyInstaller for Standalone Build
+
+1. Install PyInstaller if not already installed:
+
+```bash
+pip install pyinstaller
+```
+
+2. In the root folder of Bridge_GAD, run:
+
+```bash
+pyinstaller --noconsole --name Bridge_GAD --icon=assets/bridge_icon.ico --add-data "src/bridge_gad;bridge_gad" src/bridge_gad/__main__.py
+```
+
+* `--noconsole` → hides console window
+* `--name Bridge_GAD` → sets EXE name
+* `--icon` → adds custom icon
+* `--add-data` → includes plugin folder and other resources
+
+After building, you’ll find the `.exe` in:
+
+```
+dist/Bridge_GAD/Bridge_GAD.exe
+```
+
+---
+
+## ⚙️ Step 31B — Optional: Inno Setup Installer
+
+1. Install [Inno Setup](https://jrsoftware.org/isinfo.php)
+2. Create `Bridge_GAD.iss` script:
+
+```ini
+[Setup]
+AppName=Bridge_GAD
+AppVersion=1.0.0
+DefaultDirName={pf}\Bridge_GAD
+DefaultGroupName=Bridge_GAD
+OutputBaseFilename=Bridge_GAD_Installer
+Compression=lzma
+SolidCompression=yes
+
+[Files]
+Source: "dist\Bridge_GAD\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+[Icons]
+Name: "{group}\Bridge_GAD"; Filename: "{app}\Bridge_GAD.exe"
+Name: "{desktop}\Bridge_GAD"; Filename: "{app}\Bridge_GAD.exe"; Tasks: desktopicon
+
+[Tasks]
+Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; Flags: unchecked
+```
+
+3. Compile script → generates `Bridge_GAD_Installer.exe`
+
+✅ This produces a professional installer ready for distribution.
+
+---
+
+## ⚙️ Step 31C — Verify Installer
+
+1. Run `Bridge_GAD_Installer.exe` on a clean Windows VM or machine
+2. Check:
+
+   * EXE launches correctly
+   * Plugins, updates, telemetry work
+   * Desktop/Start Menu shortcuts are created
+   * Auto-update & marketplace function
+
+---
+
+## 💾 Step 31D — Commit Release Notes
+
+```bash
+git add .
+git commit -m "Release build preparation: installer scripts and standalone EXE"
+git tag v1.0.0
+git push --tags
+```
+
+---
+
+### ✅ After Step 31
+
+Bridge_GAD is now **fully packaged for end-users**:
+
+* Standalone executable
+* Installer with shortcuts
+* Fully integrated plugin & auto-update systems
+* Secure and stable
+
+🎉 **Congratulations!** You have successfully completed **all 31 steps** and turned Bridge_GAD into a **professional, self-maintaining bridge design platform**.
+
+---
+
+If you like, I can now prepare a **Step-by-Step “Bridge_GAD v1.0 Release Manual”** summarizing all 31 steps for your team or users. It will be a polished document with instructions, screenshots, and workflow.
+
+Do you want me to create that?

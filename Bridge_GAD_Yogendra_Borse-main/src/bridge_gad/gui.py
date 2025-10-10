@@ -1,14 +1,28 @@
 import tkinter as tk
-from tkinter import ttk, messagebox, filedialog, Menu
+from tkinter import ttk, messagebox, filedialog, Menu, simpledialog
 import requests
 import webbrowser
 import os
+import time
+import threading
 from bridge_gad.geometry import summarize
 from bridge_gad.io_utils import save_results_to_excel
 from bridge_gad.config import DEFAULT_E, DEFAULT_I
 
 # Import version from the package
 from bridge_gad import __version__
+
+# Import the updater, logger, and telemetry modules
+from bridge_gad import updater, logger, telemetry, core_updater
+
+# Import plugin loader, generator, registry, and runner
+from bridge_gad.plugins import load_plugins
+from bridge_gad import plugin_generator
+from bridge_gad.plugin_registry import build_registry, get_registry, check_for_plugin_updates
+from bridge_gad.plugin_runner import safe_run
+
+# Import plugin installer
+from bridge_gad.plugin_installer import update_all_plugins
 
 # Try to import PIL for image support (optional)
 try:
@@ -28,28 +42,6 @@ except ImportError:
     PDF_VIEWER_AVAILABLE = False
     pdf = None
     print("tkPDFViewer not available - using external PDF viewer")
-
-LATEST_RELEASE_URL = "https://api.github.com/repos/CRAJKUMARSINGH/Bridge_GAD_Yogendra_Borse/releases/latest"
-
-def check_for_updates(current_version: str):
-    """Check for updates from GitHub releases."""
-    try:
-        response = requests.get(LATEST_RELEASE_URL, timeout=5)
-        if response.status_code == 200:
-            latest_release = response.json()
-            latest_version = latest_release["tag_name"]
-            # Remove 'v' prefix if present
-            if latest_version.startswith("v"):
-                latest_version = latest_version[1:]
-            
-            if latest_version != current_version:
-                if messagebox.askyesno(
-                    "Update Available",
-                    f"A new version {latest_release['tag_name']} is available.\nCurrent version: v{current_version}\nWould you like to download it?"
-                ):
-                    webbrowser.open(latest_release["html_url"])
-    except Exception as e:
-        print("Update check failed:", e)
 
 def show_splash(root, duration=2.5):
     """Show a professional splash screen before the main window."""
@@ -170,6 +162,60 @@ def show_splash(root, duration=2.5):
         print(f"Splash screen error: {e}")
         root.deiconify()
 
+def show_plugin_registry():
+    build_registry()
+    data = get_registry()
+
+    win = tk.Toplevel()
+    win.title("Bridge_GAD Plugin Registry")
+    tree = ttk.Treeview(win, columns=("Version", "Author", "Description"), show="headings")
+    tree.pack(fill="both", expand=True)
+
+    tree.heading("Version", text="Version")
+    tree.heading("Author", text="Author")
+    tree.heading("Description", text="Description")
+
+    tree.column("Version", width=100)
+    tree.column("Author", width=150)
+    tree.column("Description", width=300)
+
+    for name, info in data.items():
+        tree.insert("", "end", values=(name, info["version"], info["author"], info["description"]))
+
+def _update_plugins():
+    try:
+        results = update_all_plugins()
+        messagebox.showinfo("Plugin Manager", "\n".join(results))
+    except Exception as e:
+        messagebox.showerror("Update Error", str(e))
+
+def setup_plugins(menu_bar):
+    """Set up the plugins menu and load all available plugins."""
+    plugin_menu = Menu(menu_bar, tearoff=0)
+    menu_bar.add_cascade(label="Plugins", menu=plugin_menu)
+
+    # Add the plugin generator option
+    plugin_menu.add_command(label="➕ New Bridge Module...", command=plugin_generator.create_plugin)
+    plugin_menu.add_separator()
+
+    plugins = load_plugins()
+    if plugins:
+        for p in plugins:
+            # Capture the plugin in a closure to avoid late binding issues
+            plugin_menu.add_command(
+                label=p.name,
+                command=lambda plug=p: safe_run(plug.__class__)
+            )
+    else:
+        plugin_menu.add_command(label="No Plugins Found", state="disabled")
+    
+    plugin_menu.add_separator()
+    plugin_menu.add_command(label="📜 Plugin Registry", command=show_plugin_registry)
+    plugin_menu.add_command(label="🔄 Check Plugin Updates", command=lambda: messagebox.showinfo("Plugin Updates", check_for_plugin_updates()))
+    plugin_menu.add_command(label="📥 Update / Install Plugins", command=_update_plugins)
+    
+    return plugins
+
 class BridgeGADApp(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -177,11 +223,17 @@ class BridgeGADApp(tk.Tk):
         self.geometry("450x350")
         self.resizable(False, False)
 
+        # Track session start
+        telemetry.event("sessions")
+
         # Create menubar
         self.create_menubar()
 
-        # Check for updates when the app starts
-        self.after(1000, lambda: check_for_updates(__version__))
+        # Check for updates when the app starts (using the new updater)
+        self.after(1000, lambda: updater.auto_check_in_background_simple(__version__))
+
+        # Check for core updates in background
+        threading.Thread(target=lambda: core_updater.check_core_update(__version__), daemon=True).start()
 
         self.create_widgets()
 
@@ -191,12 +243,34 @@ class BridgeGADApp(tk.Tk):
         
         # Help menu
         help_menu = Menu(menubar, tearoff=0)
-        help_menu.add_command(label="User Manual", command=self.open_user_manual)
+        help_menu.add_command(label="User Manual", command=lambda: (telemetry.event("feature_user_manual"), self.open_user_manual()))
+        help_menu.add_separator()
+        help_menu.add_command(label="Check for Updates", command=lambda: (telemetry.event("feature_check_updates"), updater.manual_check_for_updates(__version__)))
+        help_menu.add_command(label="Check for Core Update", command=lambda: core_updater.check_core_update(__version__))
+        help_menu.add_command(label="Export Diagnostics", command=lambda: (telemetry.event("feature_export_diag"), self.export_diagnostics()))
+        help_menu.add_command(label="View Usage Summary", command=lambda: (telemetry.event("feature_view_summary"), self.view_usage_summary()))
         help_menu.add_separator()
         help_menu.add_command(label="About", command=self.show_about)
         menubar.add_cascade(label="Help", menu=help_menu)
         
+        # Set up plugins menu
+        self.plugins = setup_plugins(menubar)
+        
         self.config(menu=menubar)
+
+    def export_diagnostics(self):
+        """Export diagnostic logs for support."""
+        try:
+            zip_path = logger.export_diagnostics()
+            messagebox.showinfo("Diagnostics Exported",
+                                f"Logs zipped to:\n{zip_path}\nPlease attach it in your support email.")
+        except Exception as e:
+            messagebox.showerror("Export Failed", f"Could not export diagnostics:\n{e}")
+
+    def view_usage_summary(self):
+        """Show usage summary dialog."""
+        summary = telemetry.summarize()
+        messagebox.showinfo("Bridge GAD Usage", summary)
 
     def open_user_manual(self):
         """Open the user manual PDF in the default viewer or show embedded viewer."""
@@ -283,8 +357,8 @@ class BridgeGADApp(tk.Tk):
             ttk.Label(frame, text=label).grid(row=i, column=0, sticky="e", pady=5, padx=5)
             ttk.Entry(frame, textvariable=var, width=25).grid(row=i, column=1, padx=5)
 
-        ttk.Button(self, text="Compute", command=self.compute).pack(pady=10)
-        ttk.Button(self, text="Export to Excel", command=self.export_to_excel).pack()
+        ttk.Button(self, text="Compute", command=lambda: (telemetry.event("feature_compute"), self.compute())).pack(pady=10)
+        ttk.Button(self, text="Export to Excel", command=lambda: (telemetry.event("feature_export_excel"), self.export_to_excel())).pack()
 
         self.output_box = tk.Text(self, width=50, height=8, state="disabled", bg="#f4f4f4")
         self.output_box.pack(pady=10)

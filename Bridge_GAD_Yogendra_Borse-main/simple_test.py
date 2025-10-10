@@ -42,6 +42,7 @@ def test_main_app():
 
 if __name__ == "__main__":
     print("=== Bridge GAD Generator Test ===")
+    print("Hello, Bridge_GAD!")
     
     # Test Excel reading
     print("\n1. Testing Excel file reading:")
