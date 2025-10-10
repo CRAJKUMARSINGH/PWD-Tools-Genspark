@@ -1,0 +1,12 @@
+# Development dependencies with specific versions for reproducibility
+-r requirements.txt  # Include production dependencies
+
+# Testing
+pytest
+flake8
+black
+mypy
+isort
+pydantic>=1.10.0,<2.0.0
+pydantic-settings>=2.0.0,<3.0.0
+PyYAML>=6.0.0

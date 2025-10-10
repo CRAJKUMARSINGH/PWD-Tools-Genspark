@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bridge_gad"
+version = "2.0.0"
+description = "Bridge_GAD — Structural Geometry and Analysis Automation by Rajkumar Singh Chauhan"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+  {name = "Rajkumar Singh Chauhan", email = "example@email.com"}
+]
+requires-python = ">=3.9"
+
+dependencies = [
+  "numpy>=1.25",
+  "pandas>=2.0",
+  "matplotlib>=3.7",
+  "openpyxl>=3.1",
+  "scipy>=1.11",
+  "requests>=2.31.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/CRAJKUMARSINGH/Bridge_GAD_Yogendra_Borse"
+Issues = "https://github.com/CRAJKUMARSINGH/Bridge_GAD_Yogendra_Borse/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+bridge-gad = "bridge_gad.cli:main"

@@ -1,0 +1,54 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+env/
+ENV/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Pytest / coverage
+.cache/
+.coverage
+htmlcov/
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project outputs / generated files
+OUTPUT_*/
+OUTPUT*/
+*.xlsx
+*.xls
+*.csv
+*.log
+*.bak
+
+# Temporary
+tmp/
+temp/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
